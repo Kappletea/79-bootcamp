@@ -1,0 +1,24 @@
+-git clone
+melakukan clone pada origin repo
+menghasilkan local repo
+"git clone <URL>"
+gitlab.com/ideki11/latihan-git-digital-bootcamp
+
+-git clone branch
+untuk clone branch spesifik
+git clone -b branchname <url repo>
+
+-git status
+informasi status repo
+
+-kondisi file git
+modified:
+revision sudah dilakukan tapi tidak masuk stage dan version control, berwarna merah
+staged
+update sudah ditandai, dan masuk ke stage area, perintah "git add", berwarna hijau.
+commited
+revisi sudah disimpan di version control
+"git commit"
+
+"git log", 	melihat list version yang sudah dibuat
+

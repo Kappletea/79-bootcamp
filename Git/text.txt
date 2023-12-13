@@ -1,0 +1,26 @@
+    -git sistem version control untuk projek software dibuat oleh linus Torvalds
+    -distributed revision control, penyimpanan data tidak hanya dalam satu database saja
+    -merge, penggabungan code
+    -vcs terpusat, setiap perubahan disimpan pada satu tempat database
+    -vcs terpusat, kekurangan:
+
+semua tim harus terkoneksi
+tersimpan di satu tempat, jika server bermasalah maka dihadirkan git
+
+    -kenapa git penting ?
+
+selain sistem control version, digunakan untuk kolaborasi
+
+    -manfaat git:
+
+menyimpan seluruh versi sc
+memahami cara kolaborasi dalam projek
+ikut berkontribusi pada projek OpS
+lebih aman, karena pengubahan setiap sc akan terlihat
+memahami deploy aplikasi modern
+
+    configurasi git CLS:
+
+git config --global user.name "[nama user]"
+git config --global user.email "[email user]"
+" git config --list " untuk memeriksa apakah config user dan email sudah tercantum

@@ -1,0 +1,26 @@
+cara add menjadi staged
+-menggunakan perintah satu persatu
+-masuk ke directory file terlebih dahulu
+
+mengubah file staged menjadi commited:
+"git commit" -m "pesan singkat"
+
+git push:
+git push <nama remote branch> <nama branch lokal>
+
+merge request / pull request
+
+git pull & git fetch
+mengambil commit terbaru dari remote/origin repo
+perbedaan : 
+-git pull mengambil commit terbaru lalu otomatis merge dengan branch aktif
+-git fetch mengambil commit saja
+kapan digunakan nya ?
+jika sudah commit di repo lokal berarti pakai git fetch
+why? untuk mencegah conlict
+jika tidak melakukan apapun di repo lokal, pakai git pull
+
+
+git branch, mengecek branch yang ada
+git checkout untuk pindah branch 
+
