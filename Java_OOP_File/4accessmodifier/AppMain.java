@@ -1,6 +1,10 @@
-package accessmodifier;
 
-public class AppMain {
+import childs.Doctor;
+import childs.Programmer;
+import childs.Teacher;
+import parents.Person;
+
+public class AppMain{
     public static void main(String [] args) {
         
         Person person1 = new Programmer("Rizky", "Bandung", ".Net Core");
