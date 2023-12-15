@@ -1,105 +1,262 @@
-1. buatlah sebuah query untuk menampilkan result set data customers yang berasal dari germany, dengan detail customer id, customer name, contact name, city, dan country
+1. untuk setiap pesanan, hitung subtotal untuk setiap pesanan (diidentifikasi oleh OrderID)
 
-SELECT CustomerID, CustomerName, ContactName, City, Country
-FROM Customers
-WHERE Country = 'Germany';
+SELECT 
+order_id, 
+CAST(SUM((quantity * unit_price) - (quantity * unit_price * discount)) AS DECIMAL(10,2)) AS subtotal
+FROM order_details
+GROUP BY order_id
+ORDER BY order_id
 
-2. buatlah sebuah query untuk menampikan result set data detail nama product yang paling mahal beserta harga nya
+2. kita mencari penjualan berdasarkan tahun dari 1996-12-24 hingga 1997-09-30
 
-SELECT ProductName, Price
-FROM Products
-WHERE Price = (
-  SELECT MAX(Price)
-  FROM Products
-);
-
-
-3. buatlah sebuah query untuk menampilkan result set data detail product dengan harga termurah dari category beverages
-
-SELECT *
-FROM Products
-WHERE Price = (
-  SELECT MIN(Price)
-  FROM Products
-  WHERE CategoryID = (
-    SELECT CategoryID
-    FROM Categories
-    WHERE CategoryName = 'Beverages'
-  )
-);
-
-
-
-4. buatlah sebuah query untuk menampilkan result set data berapa jumlah order yang memesan product konbu
-
-SELECT COUNT(OrderID) AS JumlahOrder
-FROM OrderDetails
-WHERE ProductID = (SELECT ProductID FROM Products WHERE ProductName = 'Konbu');
+SELECT 
+  o.shipped_date,
+  o.order_id,
+  CAST(
+    SUM((d.quantity * d.unit_price) - (d.quantity * d.unit_price * d.discount))
+    AS DECIMAL(10, 2)
+  ) AS subtotal,
+  EXTRACT(YEAR FROM o.shipped_date) AS year
+FROM 
+  order_details d
+INNER JOIN 
+  orders o ON d.order_id = o.order_id
+WHERE 
+  o.shipped_date BETWEEN '1996-12-24' AND '1997-09-30'
+GROUP BY 
+  o.shipped_date, o.order_id
+ORDER BY 
+  o.shipped_date;
 
 
-5. buatlah sebuah query untuk menampilkan result set data berapa harga rata rata
+3.kita hanya diminta untuk menampilkan list informasi product berurut berdasarkan alphabet
 
-SELECT AVG(Price) AS HargaRataRata
-FROM Products;
+SELECT 
+  product_id, 
+  product_name,
+  supplier_id,
+  category_id,
+  quantity_per_unit,
+  unit_price
+FROM products
+ORDER BY product_name
 
-6. buatlah sebuah query untuk menampilkan result set data customer yang bukan dari amerika latin.
+4. kita menampilkan data procut_id dan product_name dari tabel product dan urutkan berdasarkan nama productnya
 
-SELECT *
-FROM Customers
-WHERE Country NOT IN ('Uruguay', 'Peru', 'Chile')
+SELECT product_id, product_name
+FROM products
+ORDER BY product_name
+
+5. kita diminta membuat kueri untuk menghitung harga jual untuk setiap pesanan setelah diskon diterapkan
+
+SELECT
+  d.order_id,
+  p.product_name,
+  d.unit_price,
+  d.quantity,
+  d.discount,
+  cast(SUM((d.quantity * d.unit_price)-(d.quantity * d.unit_price * d.discount)) as decimal(10,2)) as ExtendedPrice
+FROM order_details d
+INNER JOIN products p
+ON d.product_id = p.product_id
+GROUP BY d.order_id, p.product_name, d.unit_price, d.quantity, d.discount
+ORDER BY d.order_id
+
+6. kita diminta menampilkan list total product terjual dan productsales digabungkan berdasarkan category dari product tersebut dan diurutkan berdasarkan category dan nama product
+
+SELECT
+  c.category_id,
+  c.category_name,
+  p.product_name,
+  cast(SUM((d.quantity*d.unit_price)-(d.quantity*d.unit_price*d.discount)) 
+     as decimal(10,2)) as ProductSales
+FROM
+    categories c
+INNER JOIN
+    products p ON c.category_id = p.category_id
+INNER JOIN
+    order_details d ON p.product_id = d.product_id
+INNER JOIN
+    orders o ON o.order_id = d.order_id
+WHERE
+    EXTRACT(YEAR FROM o.order_date) = 1997
+GROUP BY
+    c.category_id, c.category_name, p.product_name
+ORDER BY
+    c.category_name, p.product_name;
+
+7. kita diminta menampilkan list 10 product termahal berdasarkan unit price nya
+
+SELECT product_name as
+        "TEN_MOST_EXPENSIVE_PRODUCT",
+        unit_price as "UnitPrice"
+FROM products
+ORDER BY unit_price desc
+limit 10
+
+8. kita diminta menampilkan informasi semua product berdasarkan category dari product-product tersebut. dimana ada ketentuan informasi discontinued yang ditambahkan.
+
+SELECT 
+    c.category_name,
+    p.product_name,
+    p.quantity_per_unit,
+    p.units_in_stock,
+    CASE
+        WHEN p.discontinued = 1 THEN 'y'
+        WHEN p.discontinued = 0 THEN 'n'
+    END AS discontinued
+FROM 
+    products p
+INNER JOIN 
+    categories c ON p.category_id = c.category_id
+ORDER BY 
+    c.category_name, 
+    p.product_name;
+
+9. kita diminta menampilkan seluruh customer dan supplier berdasarkan kota asalnya, disini kita harus menggabungkan 2 query dan memberikan keterangan mana yang sebagai customer dan supplier
+
+SELECT 
+  city,
+  company_name,
+  contact_name,
+  case
+    when customer_id is null then 'Suppliers'
+    when customer_id is not null then 'Customers'
+  end as "Relationship"
+From customers
+Union ALL
+SELECT city, company_name, contact_name,
+  case
+    when supplier_id is null then 'Customers'
+    when supplier_id is not null then 'Suppliers'
+  end as "Relationship"
+FROM suppliers
+ORDER BY city
 
 
-7. buatlah sebuah query untuk menampilkan result set data product yang harganya dibawah 100$
+10. kita diminta menampilkan data sale_amount dari setiap employee yang diurutkan berdasarkan negara asal employee tersebut.
 
-SELECT *
-FROM Products
-WHERE Price < 100;
+SELECT 
+    e.country, 
+    e.last_name, 
+    e.first_name, 
+    o.shipped_date, 
+    o.order_id,
+    CAST(SUM((d.quantity * d.unit_price) - (d.quantity * d.unit_price * d.discount)) 
+    AS DECIMAL(16,2)) AS "Sale_Amount"
+
+FROM employees e
+INNER JOIN orders o
+  ON e.employee_id = o.employee_id
+INNER JOIN order_details d 
+  on o.order_id = d.order_id
+WHERE extract(year FROM o.shipped_date) = '1997'
+GROUP BY
+  e.country,
+  e.last_name,
+  e.first_name,
+  o.shipped_date,
+  o.order_id
+ORDER BY
+  e.country,
+  e.last_name,
+  e.first_name,
+  o.shipped_date
+
+11. kita diminta menampilkan data product dan rata-rata dari unit_price tiap product. 
+
+SELECT
+  product_name,
+  unit_price
+FROM products
+WHERE unit_price>
+      (SELECT AVG(total)
+      FROM (SELECT SUM(unit_price) as total
+            FROM products
+            GROUP BY product_name) as average)
+ORDER BY unit_price
+
+12. kita diminta mengelompokkan semua data product beserta kategori nya berdasarkan kuartal. jumlah penjualan tiap kuartal dari product, kuartal diambil dari shipped_date dari setiap productnya
+
+SELECT 
+  c.category_name,
+  p.product_name,
+  CAST(SUM((d.quantity * d.unit_price) - (d.quantity * d.unit_price * d.discount)) 
+    AS DECIMAL(12,2)) AS ProductSales,
+  concat('Qtf', '',extract(quarter FROM o.shipped_date)) as ShippedQuarter
+FROM products p
+JOIN categories c 
+  ON p.category_id = c.category_id
+JOIN order_details d 
+  ON p.product_id = d.product_id
+JOIN orders o 
+  ON d.order_id = o.order_id
+WHERE 
+    EXTRACT(YEAR FROM o.shipped_date) = 1997
+GROUP BY 
+    ShippedQuarter, c.category_name, p.product_name
+ORDER BY 
+    c.category_name, p.product_name;
 
 
-8. buatlah sebuah query untuk menampilkan result set data detail customer yang berasal dari germany atau france.
+13. kita diminta menampilkan categorysales dari category utama product pada tahun 1997. category sales didapat dari quantity * unit_price-discount
 
-SELECT *
-FROM Customers
-WHERE Country = 'Germany' OR Country = 'France';
-
-
-9. buatlah sebuah query untuk menampilkan result set data jumlah customer yang berasal dari USA
-
-SELECT *
-FROM Customers
-Where Country = 'USA'
-
-
-10. buatlah sebuah query untuk menampilkan result set data customer yang berasal dari negara yang berakhiran "a". dari semua product
-
-SELECT *
-FROM Customers
-WHERE Country Like '%a'
-
-
-11. buatlah sebuah query untuk menampilkan result set data procut yang harganya dibawah harga rata-rata
-
-SELECT *
-FROM Products
-WHERE Price < (SELECT AVG(Price) FROM Products);
+SELECT 
+    c.category_name,
+    CAST(SUM((d.quantity * d.unit_price) - (d.quantity * d.unit_price * d.discount)) AS DECIMAL(12,2)) AS CategorySales
+FROM categories c
+INNER JOIN products p 
+  ON c.category_id = p.category_id
+INNER JOIN order_details d 
+  ON p.product_id = d.product_id
+INNER JOIN orders o 
+  ON o.order_id = d.order_id
+WHERE 
+    EXTRACT(YEAR FROM o.order_date) = 1997
+GROUP BY 
+    c.category_name
+ORDER BY 
+    c.category_name;
 
 
-12. buatlah sebuah query untuk menampilkan result set data product yang berkategori beverages dan memiliki price diatas harga rata rata product.
+14. kita diminta menampilkan banyaknya order dari setiap produk berdasarkan kuarta yang diambil dari order_date pada tahun 1997. urut dan gabung berdasarkan product_name, company_name dan order_date. jika pada kuarta tersebut tidak ada order product maka tuliskan jumlahnya 0
 
-SELECT *
-FROM Products
-WHERE CategoryID = (
-  SELECT CategoryID
-  FROM Categories
-  WHERE CategoryName = 'Beverages'
-) AND Price > (
-  SELECT AVG(Price)
-  FROM Products
-);
+SELECT 
+    p.product_name, 
+    c.company_name, 
+    EXTRACT(YEAR FROM o.order_date) AS OrderYear,
+    SUM(CASE WHEN EXTRACT(QUARTER FROM o.order_date) = 1 THEN (d.quantity * d.unit_price - d.quantity * d.unit_price * d.discount) ELSE 0 END) AS "Qtr 1",
+    SUM(CASE WHEN EXTRACT(QUARTER FROM o.order_date) = 2 THEN (d.quantity * d.unit_price - d.quantity * d.unit_price * d.discount) ELSE 0 END) AS "Qtr 2",
+    SUM(CASE WHEN EXTRACT(QUARTER FROM o.order_date) = 3 THEN (d.quantity * d.unit_price - d.quantity * d.unit_price * d.discount) ELSE 0 END) AS "Qtr 3",
+    SUM(CASE WHEN EXTRACT(QUARTER FROM o.order_date) = 4 THEN (d.quantity * d.unit_price - d.quantity * d.unit_price * d.discount) ELSE 0 END) AS "Qtr 4"
+FROM customers c
+INNER JOIN orders o 
+  ON o.customer_id = c.customer_id
+INNER JOIN order_details d 
+  ON d.order_id = o.order_id
+INNER JOIN products p 
+  ON p.product_id = d.product_id
+WHERE 
+    EXTRACT(YEAR FROM o.order_date) = 1997
+GROUP BY 
+    p.product_name, c.company_name, o.order_date;
 
+15. kita diminta menampilkan banyaknya unit_in_stock dari setiap kategori berdasarkan dari benua pemasok. keterangan benua diambil dari negara dari pemasok product. urut dan gabung berdasarkan product_category dan benuanya.
 
-13. buatlah sebuah query untuk menampilkan result set data order yang menggunakan shipper speedy express.
-
-SELECT *
-FROM Orders
-WHERE ShipperID = (SELECT ShipperID FROM Shippers WHERE ShipperName = 'Speedy Express');
+SELECT 
+    c.category_name AS product_category,
+    CASE
+        WHEN s.country IN ('USA', 'Brazil', 'Canada') THEN 'America'
+        WHEN s.country IN ('Australia', 'Japan', 'Singapore') THEN 'Asia Pacific'
+        ELSE 'Europe'
+    END AS supplier_continent,
+    SUM(p.units_in_stock) AS unit_in_stock
+FROM categories c
+INNER JOIN products p 
+  ON c.category_id = p.category_id
+INNER JOIN suppliers s 
+  ON p.supplier_id = s.supplier_id
+GROUP BY 
+    c.category_name, supplier_continent
+ORDER BY 
+    c.category_name;
