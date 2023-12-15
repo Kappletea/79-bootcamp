@@ -1,0 +1,105 @@
+1. buatlah sebuah query untuk menampilkan result set data customers yang berasal dari germany, dengan detail customer id, customer name, contact name, city, dan country
+
+SELECT CustomerID, CustomerName, ContactName, City, Country
+FROM Customers
+WHERE Country = 'Germany';
+
+2. buatlah sebuah query untuk menampikan result set data detail nama product yang paling mahal beserta harga nya
+
+SELECT ProductName, Price
+FROM Products
+WHERE Price = (
+  SELECT MAX(Price)
+  FROM Products
+);
+
+
+3. buatlah sebuah query untuk menampilkan result set data detail product dengan harga termurah dari category beverages
+
+SELECT *
+FROM Products
+WHERE Price = (
+  SELECT MIN(Price)
+  FROM Products
+  WHERE CategoryID = (
+    SELECT CategoryID
+    FROM Categories
+    WHERE CategoryName = 'Beverages'
+  )
+);
+
+
+
+4. buatlah sebuah query untuk menampilkan result set data berapa jumlah order yang memesan product konbu
+
+SELECT COUNT(OrderID) AS JumlahOrder
+FROM OrderDetails
+WHERE ProductID = (SELECT ProductID FROM Products WHERE ProductName = 'Konbu');
+
+
+5. buatlah sebuah query untuk menampilkan result set data berapa harga rata rata
+
+SELECT AVG(Price) AS HargaRataRata
+FROM Products;
+
+6. buatlah sebuah query untuk menampilkan result set data customer yang bukan dari amerika latin.
+
+SELECT *
+FROM Customers
+WHERE Country NOT IN ('Uruguay', 'Peru', 'Chile')
+
+
+7. buatlah sebuah query untuk menampilkan result set data product yang harganya dibawah 100$
+
+SELECT *
+FROM Products
+WHERE Price < 100;
+
+
+8. buatlah sebuah query untuk menampilkan result set data detail customer yang berasal dari germany atau france.
+
+SELECT *
+FROM Customers
+WHERE Country = 'Germany' OR Country = 'France';
+
+
+9. buatlah sebuah query untuk menampilkan result set data jumlah customer yang berasal dari USA
+
+SELECT *
+FROM Customers
+Where Country = 'USA'
+
+
+10. buatlah sebuah query untuk menampilkan result set data customer yang berasal dari negara yang berakhiran "a". dari semua product
+
+SELECT *
+FROM Customers
+WHERE Country Like '%a'
+
+
+11. buatlah sebuah query untuk menampilkan result set data procut yang harganya dibawah harga rata-rata
+
+SELECT *
+FROM Products
+WHERE Price < (SELECT AVG(Price) FROM Products);
+
+
+12. buatlah sebuah query untuk menampilkan result set data product yang berkategori beverages dan memiliki price diatas harga rata rata product.
+
+SELECT *
+FROM Products
+WHERE CategoryID = (
+  SELECT CategoryID
+  FROM Categories
+  WHERE CategoryName = 'Beverages'
+) AND Price > (
+  SELECT AVG(Price)
+  FROM Products
+);
+
+
+13. buatlah sebuah query untuk menampilkan result set data order yang menggunakan shipper speedy express.
+
+SELECT *
+FROM Orders
+WHERE ShipperID = (SELECT ShipperID FROM Shippers WHERE ShipperName = 'Speedy Express');
