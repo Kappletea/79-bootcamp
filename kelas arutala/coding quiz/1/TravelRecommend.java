@@ -23,6 +23,8 @@ public class TravelRecommend {
         // 6460000
         long[] listTotalFeePerDestinasi = menghitungTotalFeePerDestinasi(transportationFee, hotelFee, culinaryFee,
                 rekreasiFee, jumlahOrang, lamaMenginap);
+
+        //validasi apakah budget mencukupi
         for (int i = 0; i < listTotalFeePerDestinasi.length; i++) {
             if (budget < listTotalFeePerDestinasi[i]) {
                 System.out.println("Need more budget");
@@ -51,7 +53,7 @@ public class TravelRecommend {
     }
 
     public static long[] menghitungTotalFeePerDestinasi(long[] transportationFee, long[] hotelFee, long[] culinaryFee,
-            long[] rekreasiFee, int jumlahOrang, int lamaMenginap) {
+        long[] rekreasiFee, int jumlahOrang, int lamaMenginap) {
         long[] result = new long[4];
         for (int i = 0; i < transportationFee.length; i++) {
             result[i] = (transportationFee[i] + ((hotelFee[i] + culinaryFee[i]) * lamaMenginap) + rekreasiFee[i])
@@ -61,7 +63,6 @@ public class TravelRecommend {
     }
 
     public static long[] menghitungDestinasiTerdekatDenganBudget(long[] totalFeePerDestinasi, long budget) {
-
         long[] hitungResult = new long[4];
         for (int i = 0; i < totalFeePerDestinasi.length; i++) {
             hitungResult[i] = Math.abs(totalFeePerDestinasi[i] - budget);
