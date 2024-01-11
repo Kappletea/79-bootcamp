@@ -20,55 +20,30 @@ public class Gaji {
         totalGajiPokok = (int) getGajiPokok(umkCabangPerusahaan, inputPosisiJabatan, inputLamaBekerja);
         System.out.println(totalGajiPokok);
         // get tunjangan keluarga
-        if (statusPernikahan == true) {
-            totalTunjanganKeluarga = (int) getTunjanganKeluarga(totalGajiPokok);
-            System.out.println(totalTunjanganKeluarga);
-            // get tunjangan bekerja
-            totalTunjanganBekerja = (int) getTunjanganJabatan(totalGajiPokok, inputLamaBekerja);
-            System.out.println(totalTunjanganBekerja);
-            // get tunjangan posisi jabatan
-            totalTunjanganPosisi = getTunjanganPosisi(inputPosisiJabatan);
-            System.out.println(totalTunjanganPosisi);
-            // get gaji kotor
-            totalGajiKotor = getGajiKotor(totalGajiPokok, totalTunjanganKeluarga, totalTunjanganBekerja,
-                    totalTunjanganPosisi);
-            System.out.println(totalGajiKotor);
-            // potongan pensiun
-            potonganPensiun = (int) getPotonganPensiun(totalGajiKotor);
-            System.out.println(potonganPensiun);
-            // potongan BPJS
-            potonganBPJS = (int) getPotonganBPJS(totalGajiKotor);
-            System.out.println(potonganBPJS);
-            // potongan PPH
-            potonganPPH = (int) getPotonganPPH(totalGajiKotor);
-            System.out.println(potonganPPH);
-            // gaji bersih
-            totalGajiBersih = getGajiBersih(totalGajiKotor, potonganPensiun, potonganBPJS, potonganPPH);
-            System.out.println(totalGajiBersih);
-        } else {
-            // get tunjangan bekerja
-            totalTunjanganBekerja = (int) getTunjanganJabatan(totalGajiPokok, inputLamaBekerja);
-            System.out.println(totalTunjanganBekerja);
-            // get tunjangan posisi jabatan
-            totalTunjanganPosisi = getTunjanganPosisi(inputPosisiJabatan);
-            System.out.println(totalTunjanganPosisi);
-            // get gaji kotor
-            totalGajiKotor = getGajiKotor1(totalGajiPokok, totalTunjanganBekerja,
-                    totalTunjanganPosisi);
-            System.out.println(totalGajiKotor);
-            // potongan pensiun
-            potonganPensiun = (int) getPotonganPensiun(totalGajiKotor);
-            System.out.println(potonganPensiun);
-            // potongan BPJS
-            potonganBPJS = (int) getPotonganBPJS(totalGajiKotor);
-            System.out.println(potonganBPJS);
-            // potongan PPH
-            potonganPPH = (int) getPotonganPPH(totalGajiKotor);
-            System.out.println(potonganPPH);
-            // gaji bersih
-            totalGajiBersih = getGajiBersih(totalGajiKotor, potonganPensiun, potonganBPJS, potonganPPH);
-            System.out.println(totalGajiBersih);
-        }
+        totalTunjanganKeluarga = (int) getTunjanganKeluarga(totalGajiPokok, statusPernikahan);
+        System.out.println(totalTunjanganKeluarga);
+        // get tunjangan bekerja
+        totalTunjanganBekerja = (int) getTunjanganJabatan(totalGajiPokok, inputLamaBekerja);
+        System.out.println(totalTunjanganBekerja);
+        // get tunjangan posisi jabatan
+        totalTunjanganPosisi = getTunjanganPosisi(inputPosisiJabatan);
+        System.out.println(totalTunjanganPosisi);
+        // get gaji kotor
+        totalGajiKotor = getGajiKotor(totalGajiPokok, totalTunjanganKeluarga, totalTunjanganBekerja,
+                totalTunjanganPosisi);
+        System.out.println(totalGajiKotor);
+        // potongan pensiun
+        potonganPensiun = (int) getPotonganPensiun(totalGajiKotor);
+        System.out.println(potonganPensiun);
+        // potongan BPJS
+        potonganBPJS = (int) getPotonganBPJS(totalGajiKotor);
+        System.out.println(potonganBPJS);
+        // potongan PPH
+        potonganPPH = (int) getPotonganPPH(totalGajiKotor);
+        System.out.println(potonganPPH);
+        // gaji bersih
+        totalGajiBersih = getGajiBersih(totalGajiKotor, potonganPensiun, potonganBPJS, potonganPPH);
+        System.out.println(totalGajiBersih);
 
     }
 
@@ -130,10 +105,14 @@ public class Gaji {
         return resultGajiPokok;
     }
 
-    public static double getTunjanganKeluarga(int totalGajiPokok) {
+    public static double getTunjanganKeluarga(int totalGajiPokok,boolean statusPernikahan) {
         double result = 0;
         double presentase = 10.0 / 100.0;
-        result = presentase * totalGajiPokok;
+        if(statusPernikahan == true){
+            result = presentase * totalGajiPokok;
+        }else{
+            result =0;
+        }
         return result;
     }
 
@@ -169,7 +148,8 @@ public class Gaji {
         int result = totalGajiPokok + totalTunjanganKeluarga + totalTunjanganBekerja + totalTunjanganPosisi;
         return result;
     }
-    public static int getGajiKotor1(int totalGajiPokok, int totalTunjanganBekerja, int totalTunjanganPosisi){
+
+    public static int getGajiKotor1(int totalGajiPokok, int totalTunjanganBekerja, int totalTunjanganPosisi) {
         int result = totalGajiPokok + totalTunjanganBekerja + totalTunjanganPosisi;
         return result;
     }
