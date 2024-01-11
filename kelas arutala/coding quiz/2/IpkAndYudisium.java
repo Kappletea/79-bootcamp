@@ -36,9 +36,6 @@ public class IpkAndYudisium {
 			arrScore[i] = convertHarkat(arrHarkat[i], arrNilaiHarkat); 
 			arrScore[i] = calculateHarkatPerModule(arrScore[i], arrSks[i]);
 		}
-		// for(int i=0; i<  banyakModule;i++){
-		// 	System.out.println("awikwok: "+ arrScore[i]);
-		// }
 		
 		
 		totalScore = calculateTotalValue(arrScore);
@@ -74,8 +71,9 @@ public class IpkAndYudisium {
 			break;
 			case "D":
 			value = arrNilaiHarkat[3];
+			break;
 			case "E":
-			value = arrNilaiHarkat[3];
+			value = arrNilaiHarkat[4];
 			break;
 		}
 		return value;
