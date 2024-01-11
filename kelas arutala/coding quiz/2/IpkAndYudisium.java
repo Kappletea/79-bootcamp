@@ -82,7 +82,7 @@ public class IpkAndYudisium {
 	//Menantukan Yudisium
 	public static String getYudisium(boolean isPending, double ipk) {
 		String statusYudisium = "";
-		if(isPending = true){
+		if(isPending == true || ipk < 2){
 			statusYudisium = "Pending";
 		}else if(ipk >= 3.5){
 			statusYudisium = "Cum Laude";
@@ -114,7 +114,14 @@ public class IpkAndYudisium {
 		
 		System.out.println("Yudisium: "+statusYudisium);
 		System.out.print("IPK: ");
-		System.out.printf("%.2f",ipk);
+		System.out.printf("%.2f", ipk);
+		System.out.print("\n");
+		System.out.printf("Total SKS: %.1f", totalSks);
+		System.out.print("\n");
+		System.out.println("Total Module: "+ arrModule.length);
+		for(int i=0; i<arrModule.length; i++){
+			System.out.println((i+1) +". " + arrModule[i] + " (" +  arrHarkat[i] + ")");
+		}
 		
 		//Lanjutkan kodingan disini
 	}
@@ -123,7 +130,13 @@ public class IpkAndYudisium {
 	public static boolean isPendingValildation(String[] arrHarkat) {
 		boolean isPending = false;
 		//Lanjutkan kodingan disini
-		
+		for(int i =0; i<arrHarkat.length;i++){
+			if(arrHarkat[i].equalsIgnoreCase("E")){
+				isPending = true;
+			}else{
+				isPending = false;
+			}
+		}
 		return isPending;
 	}
 }
