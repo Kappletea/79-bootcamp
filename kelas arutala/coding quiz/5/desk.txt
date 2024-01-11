@@ -1,0 +1,79 @@
+divisi{"Surabaya", "Jakarta", "Bandung", "Medan", "Makassar"}
+
+jabatan{"Software Engineer", "Data Analyst", "UX Designer", "Project Manager", "QA Engineer"}
+
+menghitung gaji bersih karyawan berdasarkan posisi dan penempatan divisi
+
+perhitungan ada 7 komponen
+- GajiPokok
+- Tunjangan Transportasi
+- Tunjangan Makan
+- Tunjangan Kesehatan
+- Potongan BPJS
+- Potongan PPH
+
+data yang diperlukan:
+
+divisi{"Surabaya", "Jakarta" ,"Bandung", "Medan", "Makassar"}
+GajiPokok[][]{
+		{8000000, 9000000, 7500000, 7200000, 8500000},
+		{7000000, 8000000, 6500000, 6200000, 7500000},
+		{7500000, 8500000, 7000000, 6800000, 8000000},
+		{10000000, 11000000, 9500000, 9200000, 10500000},
+		{7500000, 8500000, 7000000, 6800000, 8000000},	};
+
+ditambah:
+TunjanganTransportasi:
+		{1000000, 1500000, 1200000, 1100000, 1300000}		
+jabatan{"Software Engineer", "Data Analyst", "UX Designer", "Project Manager", "QA Engineer"}
+
+TunjanganMakan: 50000/hariKerja
+tunjanganKesehatan: (2.0/100)*gaji pokok
+potongan: 
+BPJS 				(3.0/100)*gaji pokok
+PPH 				(5.0/100)*gaji pokok
+
+
+
+List Function
+-formatCurrency
+mengubah nilai numerik jadi mata uang (RP. ###,###,##0.00)
+untuk mencetak gaji bersih biar rapih dan mudah dibaca
+
+-getGajiPokok
+untuk mendapatkan gaji pokok dari array berdasarkan posisi dan divisi yang diberikan (jabatan, divisi)
+mengambil nilai gaji dari array 2D gaji_pokok yang diatas yang gede
+
+-getTunjanganTransport
+untuk mendapatkan tunjangan transportasi berdasarkan divisi (divisi)
+mengambil nilai tunjangan dari array TUNJANGAN_TRANSPORT
+
+-calculateTunjanganKesehatan
+menghitung tunjangan kesehatan pake presentase diatas, dari gaji pokok
+
+-calculatePotonganBPJS
+menghitung potongan BPJS pake presentase diatas, dari gaji pokok
+
+-calculatePotonganPPH
+menghitung potongan PPH pake presentase diatas, dari gaji pokok
+
+-calculateGajiBersih
+methode utama
+menghitung gaji bersih berdasarkan posisi,divisi, dan total hari kerja dalam sebulan.
+masukkan fungsi lain juga didalamnya
+
+catatan: 
+program ngitungnya bener
+jumlah hari kerja dalam sebulan adalah 22 hari, pake if sama bolean
+format output gaji bersih harus ada 2 angka desimal
+
+
+input:
+next(), posisi karyawan
+next(), divisi karyawan
+
+ouput:
+Software Engineer
+Jakarta
+22 hari
+11,060,000.00
