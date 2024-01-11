@@ -1,20 +1,15 @@
 import java.util.Scanner;
 
 public class SandiPramuka {
-    private static char previousChar = '\0';
-    private static int count = 0;
     public static void main(String[] args) {
         Scanner key = new Scanner(System.in);
         String inputKalimat = key.nextLine();
         key.close();
-        
-
-       
 
         int[] arrHasilEncode = encodeToSandi(inputKalimat);
         String hasilEncode = generateSandiString(arrHasilEncode);
         System.out.println(hasilEncode);
-         // cek output
+        // cek output
         // System.out.print("{");
         // for(int i = 0; i<arrayInputKalimat.length; i++){
         // System.out.print(arrayInputKalimat[i]+",");
@@ -24,8 +19,8 @@ public class SandiPramuka {
 
     private static int[] encodeToSandi(String inputKalimat) {
         char[] arrayInputKalimat = inputKalimat.toCharArray();
-        int[] result = new int[arrayInputKalimat.length];//array baru 3
-        
+        int[] result = new int[arrayInputKalimat.length];// array baru 3
+
         for (int i = 0; i < arrayInputKalimat.length; i++) {
             result[i] = getSandiNumber(arrayInputKalimat[i]);
         }
@@ -91,32 +86,53 @@ public class SandiPramuka {
                 return 0;
         }
     }
-    
 
-    private static int getCount(char arrayInputKalimat){//4444,444
-        if (arrayInputKalimat == previousChar) {
-            // If the current character is the same as the previous one, increase the count
-            count++;
-        } else {
-            // If the current character is different, reset the count to one
-            count = 1;
+    private static int getCount(char arrayInputKalimat) {
+        String str = String.valueOf(arrayInputKalimat);
+
+        switch (str) {
+            case "1":
+            case "2":
+            case "3":
+            case "4":
+            case "5":
+            case "6":
+            case "7":
+                return 1;
+            case "11":
+            case "22":
+            case "33":
+            case "44":
+            case "55":
+            case "66":
+            case "77":
+                return 2;
+            case "111":
+            case "222":
+            case "333":
+            case "444":
+            case "555":
+            case "666":
+                return 3;
+            case "1111":
+            case "2222":
+            case "3333":
+            case "4444":
+            case "5555":
+            case "6666":
+                return 4;
+            default:
+                return 0;
         }
-
-        // Update the previousChar for the next call
-        previousChar = arrayInputKalimat;
-        return count;
     }
+
     private static String generateSandiString(int[] sandi) {
         StringBuilder result = new StringBuilder();
 
-        for(int i = 0; i<sandi.length;i++){
-            count = getCount((char)sandi[i]);
-            if(count>1){
-                result.append("-");
-            }
+        for (int i = 0; i < sandi.length; i++) {
             result.append(sandi[i]);
         }
-        
+
         return result.toString();
     }
 }
