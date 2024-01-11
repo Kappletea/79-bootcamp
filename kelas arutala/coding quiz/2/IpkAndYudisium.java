@@ -36,9 +36,6 @@ public class IpkAndYudisium {
 			arrScore[i] = convertHarkat(arrHarkat[i], arrNilaiHarkat); 
 			arrScore[i] = calculateHarkatPerModule(arrScore[i], arrSks[i]);
 		}
-		// for(int i=0; i<  banyakModule;i++){
-		// 	System.out.println("awikwok: "+ arrScore[i]);
-		// }
 		
 		
 		totalScore = calculateTotalValue(arrScore);
@@ -74,6 +71,7 @@ public class IpkAndYudisium {
 			break;
 			case "D":
 			value = arrNilaiHarkat[3];
+			break;
 			case "E":
 			value = arrNilaiHarkat[4];
 			break;
@@ -84,17 +82,7 @@ public class IpkAndYudisium {
 	//Menantukan Yudisium
 	public static String getYudisium(boolean isPending, double ipk) {
 		String statusYudisium = "";
-		if(isPending = true){
-			statusYudisium = "Pending";
-		}else if(ipk >= 3.5){
-			statusYudisium = "Cum Laude";
-		}else if(ipk >= 2.75 && ipk < 3.5){
-			statusYudisium = "Sangat Memuaskan";
-		}else if(ipk >=2.00 && ipk<2.75){
-			statusYudisium = "Memuaskan";
-		}else{
-			statusYudisium = "Pending";
-		}
+		//Lanjutkan Kodingan disini
 		return statusYudisium;
 	}
 	
@@ -126,13 +114,7 @@ public class IpkAndYudisium {
 	//Validasi Pending berdasarkan Nilai Harkat
 	public static boolean isPendingValildation(String[] arrHarkat) {
 		boolean isPending = false;
-		for(int i =0; i<arrHarkat.length;i++){
-			if(arrHarkat[i].equalsIgnoreCase("E")){
-				isPending = true;
-			}else{
-				isPending = false;
-			}
-		}
+		//Lanjutkan kodingan disini
 		
 		return isPending;
 	}
