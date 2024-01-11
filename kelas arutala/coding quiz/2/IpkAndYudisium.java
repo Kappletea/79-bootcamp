@@ -120,7 +120,7 @@ public class IpkAndYudisium {
 		System.out.print("\n");
 		System.out.println("Total Module: "+ arrModule.length);
 		for(int i=0; i<arrModule.length; i++){
-			System.out.println((i+1) +". " + arrModule[i] + " (" +  arrHarkat[i] + ")");
+			System.out.println((number+i) +". " + arrModule[i] + " (" +  arrHarkat[i] + ")");
 		}
 		
 		//Lanjutkan kodingan disini
