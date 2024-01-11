@@ -13,7 +13,7 @@ public class Tabungan {
     public static long hitungTotalTabungan(int jumlahAnggota, int lamaTabungan) {
         long totalTabungan = 0;
 
-        for (int bulan = 1; bulan <= lamaTabungan; bulan++) {
+        for (int bulan = 1; bulan <=lamaTabungan; bulan++) {
 
             int jumlahHari = 31;
             if (bulan == 2) {
