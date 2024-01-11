@@ -38,14 +38,13 @@ public class TravelRecommend {
                 // 3665000
                 // 40000
                 long[] listBudgetTerdekat = menghitungDestinasiTerdekatDenganBudget(listTotalFeePerDestinasi, budget);
-               
                 // cari nilai selisih terkecil lalu cari index nya
                 // dari contoh di atas kalau dengan mata bisa terlihat bahwa nilai yang paling
                 // terkecil adalah index ke 3
                 int indexSelisihTerkecil = cariIndeksSelisihTerkecil(listBudgetTerdekat);
                 // samakan index selisih dengan index destinasi
-                System.out.print(destinasiTravel[indexSelisihTerkecil]);
-                System.out.println(" " + listTotalFeePerDestinasi[indexSelisihTerkecil]);
+                System.out.print(destinasiTravel[indexSelisihTerkecil] + " ");
+                System.out.print(listTotalFeePerDestinasi[indexSelisihTerkecil]);
                 break;
             }
         }

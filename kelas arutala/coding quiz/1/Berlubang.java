@@ -5,7 +5,7 @@ public class Berlubang {
         Scanner key = new Scanner(System.in);
         String inputKarakter = key.nextLine();
         char[] inputKarakterArray = inputKarakter.toCharArray();
-        char[] karakterBerlubang = { 'A', 'B', 'D', 'O', 'P', 'Q', 'R','a', 'b', 'c', 'd', 'e', 'g', 'o', 'p', 'q', '6','8','9','0','4',};
+        char[] karakterBerlubang = { 'A', 'B', 'D', 'O', 'P', 'Q', 'R','a', 'b', 'd', 'e', 'g', 'o', 'p', 'q', '6','8','9','0','4',};
         cekKarakter(karakterBerlubang, inputKarakterArray);
 
     }
@@ -16,10 +16,9 @@ public class Berlubang {
             for (int j = 0; j < karakterBerlubang.length; j++) {
                 if (inputKarakterArray[i] == karakterBerlubang[j]) {
                     if ( karakterBerlubang[j] =='B' || karakterBerlubang[j]=='8') {
-                        jumlahLubang = jumlahLubang + 2;
-                    } else {
                         jumlahLubang = jumlahLubang + 1;
                     }
+                    jumlahLubang = jumlahLubang + 1;
                 }
             }
         }

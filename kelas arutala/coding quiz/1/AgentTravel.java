@@ -14,7 +14,13 @@ public class AgentTravel{
             kapasitasBus = cekKapasitasBus(kapasitasBus, jumlahPenumpang);
             hargaKapasitasBus= cekHargaKapasitas(kapasitasBus, hargaKapasitasBus,jumlahPenumpang);
             hargaBusTermurah= cekHargaTermurah(hargaKapasitasBus);
-            System.out.println(hargaBusTermurah);
+            if(jumlahPenumpang>60){
+                hargaBusTermurah = hargaBusTermurah*2;
+                System.out.println(hargaBusTermurah);
+            }else{
+                System.out.println(hargaBusTermurah);
+            }
+           
         }
     }
 
@@ -31,13 +37,18 @@ public class AgentTravel{
         for(int i = 0; i<kapasitasBus.length; i++){
             if (kapasitasBus[i]>=jumlahPenumpang) {
                 countKapasitas++;
+            }else if(jumlahPenumpang>=60){
+                countKapasitas++;
             }
         }
 
-        int[] listKapasitasTersedia= new int[countKapasitas];
-        for(int i = 0 ; i<kapasitasBus.length;i++){
-            if(kapasitasBus[i] >= jumlahPenumpang){
-                listKapasitasTersedia[i] = kapasitasBus[i];
+        int[] listKapasitasTersedia = new int[countKapasitas];
+        int index = 0;
+        for (int i = 0; i < kapasitasBus.length; i++) {
+            if (kapasitasBus[i] >= jumlahPenumpang) {
+                listKapasitasTersedia[index++] = kapasitasBus[i];
+            }if(jumlahPenumpang > 60){
+                listKapasitasTersedia[i] = kapasitasBus[i]*2; 
             }
         }
         return listKapasitasTersedia;
