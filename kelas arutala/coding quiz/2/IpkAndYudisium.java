@@ -82,7 +82,15 @@ public class IpkAndYudisium {
 	//Menantukan Yudisium
 	public static String getYudisium(boolean isPending, double ipk) {
 		String statusYudisium = "";
-		//Lanjutkan Kodingan disini
+		if(isPending = true){
+			statusYudisium = "Pending";
+		}else if(ipk >= 3.5){
+			statusYudisium = "Cum Laude";
+		}else if(ipk >= 2.75 && ipk < 3.5){
+			statusYudisium = "Sangat Memuaskan";
+		}else if(ipk >=2.00 && ipk<2.75){
+			statusYudisium = "Memuaskan";
+		}
 		return statusYudisium;
 	}
 	
