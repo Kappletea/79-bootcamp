@@ -1,39 +1,36 @@
 import java.util.Scanner;
-
 public class KarakteristikHewan {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Masukkan persentase kesamaan minimal (N):");
-        double persentaseMinimal = scanner.nextDouble();
-
-        System.out.println("Masukkan ciri-ciri hewan A:");
-        scanner.nextLine(); // Mengonsumsi karakter newline
-        String ciriHewanA = scanner.nextLine().toLowerCase();
-
-        System.out.println("Masukkan ciri-ciri hewan B:");
-        String ciriHewanB = scanner.nextLine().toLowerCase();
+        Scanner key = new Scanner(System.in);
+        double persentaseMinimal = key.nextDouble();
+        key.nextLine();
+        String ciriHewanA = key.nextLine().toLowerCase();
+        String ciriHewanB = key.nextLine().toLowerCase();
+        key.close();
 
         boolean hasilPerbandingan = bandingkanHewan(ciriHewanA, ciriHewanB, persentaseMinimal);
 
         if (hasilPerbandingan) {
-            System.out.println("Hewan A dan Hewan B mirip.");
+            System.out.println("sama");
         } else {
-            System.out.println("Hewan A dan Hewan B tidak mirip.");
+            System.out.println("tidak sama");
         }
     }
 
     public static boolean bandingkanHewan(String ciriHewanA, String ciriHewanB, double persentaseMinimal) {
         int kesamaan = 0;
-
-        for (int i = 0; i < ciriHewanA.length(); i++) {
-            char c = ciriHewanA.charAt(i);
-            if (ciriHewanB.contains(String.valueOf(c))) {
-                kesamaan++;
+        char[] hewanA = ciriHewanA.toCharArray();
+        char[] hewanB = ciriHewanB.toCharArray();
+        int unik = hewanA.length + hewanB.length;
+        for (int i = 0; i < hewanA.length; i++) {
+            for(int j = 0; j< hewanB.length; j++){
+                if(hewanA[i] == hewanB[j]){
+                    kesamaan++;
+                }
             }
         }
 
-        double persentaseKesamaan = ((double) kesamaan / Math.max(ciriHewanA.length(), ciriHewanB.length())) * 100;
+        double persentaseKesamaan = ((double) kesamaan / unik) * 100;
 
         return persentaseKesamaan >= persentaseMinimal;
     }

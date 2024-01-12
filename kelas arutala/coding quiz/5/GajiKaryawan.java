@@ -116,10 +116,6 @@ public class GajiKaryawan {
         return formattedValue;
     }
 
-    public static void getArrayData(){
-        
-    }
-
     public static void cetakGaji(String lokasiDivisiKaryawan, String jabatanKaryawan, String[] arrlokasiDivisi, long[][] arrGajiPokok, long[] arrTunjanganTransportasi, String[] posisiJabatan){
         //ambil data
         int indexLokasiDivisiKaryawan = getLokasiDivisiKaryawan(lokasiDivisiKaryawan, arrlokasiDivisi);
