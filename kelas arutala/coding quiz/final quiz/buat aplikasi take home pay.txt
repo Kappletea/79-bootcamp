@@ -1,0 +1,225 @@
+buat aplikasi take home pay, 
+
+1. Rates Gaji,
+adalah besaran yang didapat 
+sesuai dengan posisi karyawan, masa kerja dan tingkatan
+rates Gaji:
+docs.google.com/spreadsheets/d/1slPxoeKM_4dL7vywnxyN2_qV2pHmyn6WZKe0aDE4yFU/edit?usep=sharing
+
+Jika Masa Kerja,
+yang di inputkan > maksimal kerja yang ada pada data spreadsheet. then, nilai yang diambil adalah nilai yang sama seperti pada maksimal masa kerja
+
+Data Rates Gaji,
+di implementasi menggunakan Array atau Array multidimensi
+
+2. Gaji Pokok,
+adalah besaran gaji yang didapat dari:
+Rates Gaji * besaran UMK Penempatan Karyawan.
+
+3. Tunjangan Jabatan,
+- Programmer: 10% 
+- Tester: 15% 
+- Scrum Master: 20% 
+- HRD: 10% 
+^ dari gaji pokok
+
+4. Tunjangan Keluarga,
+diberikan kepada karyawan yang status pernikahannya adalah Kawin (true), 
+dapat dihitung dari 5% Gaji Pokok
+
+5. Tunjangan Anak,
+diberikan kepada karyawan yang sudah mempunyai anak (true), 
+besaran per anak 2.5% * Gaji Pokok (Maks 4 anak)
+
+6. Tunjangan Tingkatan,
+- Intern: 0
+- Junior: Rp. 250000
+- Middle: Rp. 500000
+- Senior: Rp. 1000000
+
+7. Tunjangan Transport,
+diberikan kepada karyawan yang ditempatkan di 
+Jakarta || Bandung. Besaran: Rp. 250.000.
+
+8. Penghasilan Bruto (gaji kotor),
+besarn didapat dari 
+total Gaji Pokok + Tunjangan. Jabatan + Tunjangan Keluarga + Tunjangan Transport + Tunjangan Anak + Tunjangan Tingkatan
+
+*Penghasilan bruto bisa berubah tergantung variable tunjangan.
+
+9. Potongan PPH, 
+besaran pajak harus dibayar setiap bulan, sesuai dengan PTKP dan PKP
+berdasarkan perhitungan berikut:
+	1. Wajib Pajak, 
+		Harus memiliki Penghasilan Bruto Lebih dari 
+		4000000 Rupiah.
+	2. Besarnya Penghasilan Tidak Kena Pajak (PTKP):
+		-Wajib pajak Diri Sendiri 
+			Rp. 36000000.
+		-Wajib Pajak Istri/Suami 
+			Rp. 3000000 (Max 3 Anak)/
+
+		contoh ada di SpreadSheet
+		*Pph21*
+
+
+10. Potongan BPJS Tenaga Kerja
+3.5% dari Gaji Bruto
+
+11. Potongan BPJS Kesehatan
+1.5% dari Gaji Bruto
+
+12. Take Home Pay didapat dari,
+Gaji Bruto - SEMUA POTONGAN (pph + BPJS TENAGA KERJA + BPJS KESEHATAN)
+
+
+
+
+
+13. Function Utama Yang Harus ada:
+	-getRatesGaji,
+		fungsi, mendapatkan 
+		besaran Rates Gaji
+		berdasarkan:
+		Posisi Karyawan, 
+		Masa kerja,
+		tingkatan
+
+	-kalkulasiGajiPokok,
+		fungsi, menghitung
+		besaran gaji pokok Karyawan
+
+	-kalkulasiTunjKeluarga,
+		fungsi, menghitung
+		besaran Tunjangan Keluarga
+
+	-kalkulasiTunjAnak,
+		fungsi, menghitung
+		Besaran tunjangan anak
+
+	-kalkulasiTunjJabatan,
+		fungsi, menghitung
+		besaran tunjangan jabatan
+
+	-kalkulasiTunjTingkatan,
+		fungsi, menghitung
+		besaran tunjangan tingkatan
+
+	-kalkulasiTunjTransport,
+		fungsi, menghitung
+		besar tunjangan transport
+
+	-kalkulasiGajiBruto,
+		fungsi, menghitung
+		besaran gaji bruto karyawan
+
+	-kalkulasiPph,
+		fungsi, menghitung
+		besaran pph yang didapat 
+		oleh karyawan
+		per bulan
+
+	-kalkulasiPotonganBpjsTenagaKerja,
+		fungsi, menghitung
+		besaran BPJS Tenaga Kerja
+		per bulan
+
+	-kalkulasiPotonganBpjsKesehatan,
+		fungsi, menghitung
+		besaran BPJS Kesehatan
+
+	-kalkulasiTakeHomePay,
+		fungsi, menghitung
+		besaran take home pay
+		karyawan
+		per Bulan
+
+*Note: Silahkan diperbolehkan untuk menambah function method lainnya yang dibutuhkan dengan ketentuan soal.
+
+
+
+
+ketentuan Validasi:
+1. Input Nama Pegawai
+	hanya menerima huruf (alpabet) dan spasi.
+
+2. Input Posisi/Jabatan Karyawan
+	hanya menerima huruf (alpabet dan spasi)
+	dan hanya bisa diisi dengan:
+	programmer,
+	tester,
+	scrum master
+	HRD
+
+3. Input Penempatan
+	hanya menerima huruf (alpabet dan spasi)
+	hanya bisa diisi dengan:
+	bandung, garut, jakarta, bekasi, bogor, karawang
+
+4. Input Tingkatan Karyawan
+	hanya menerima huruf (alpabet dan spasi)
+	hanya boleh diisi dengan tingkatan karyawan.
+	untuk programmer, tester, scrum mastyer hanya terdiri dari 3 tingkatan : Junor, Middle, dan Senior
+	jika HRD:
+	Intern, Junior, Middle, Senior
+
+5. Input Masa Kerja
+	hanya menerima angka,
+	0 > angka <= 30
+
+6. Input Status Pernikahan
+	hanya menerima huruf (alpabet, spasi)
+	hanya boleh diisi dengan:
+	Kawin, Belum Kawin, Cerai.
+
+7. Input Jumlah Anak
+	hanya dapat menerima angka,
+	0>angka<=30
+
+
+
+
+
+
+Gambaran Tampilan Aplikasi
+tampilan input ouput aplikasi disesuaikan dengan kebutuhan dan kreatifitas masing-masing
+gambaran:
+
+SLIP GAJI KARYAWAN
+Hendra
+Gaji Pokok 		Rp. 25.2
+Tunjangan Jabatan
+Tunjangan Keluarga
+Tunjangan Anak
+Tunjangan Tingkatan
+Tunjangan Transport
+Penghasilan Bruto
+Potongan PPH
+Potongan BPJS Tenaga Kerja
+Potongan Kesehatan
+Take Home Pay/Gaji Bersih
+
+
+
+
+
+Spesifikasi Task.
+1. Buatlah Sebuah Class Dengan nama
+SalarySMSRofiqMS, 
+Dimana Class itu untuk menghitung simulasi gaji PNS<
+dengan mengimplementasi materi java fundamental (variable, input User, boolean expression, if, looping, array, function dll)
+
+Contoh Penamaan File: SalarySMSRofiqMS
+
+2. Tambahkan Keterangan Informasi Talen Pada Class Tersebut dengan ketentuan berikut:
+
+import java.util.Scanner;
+/*
+*Created By: Rofiq Muhammad Syauqi
+*Created At: jadwal
+*/
+public class GajiPNS{}
+
+
+3. Jika Sudah Selesai Silahkan Upload atau submit file java tersebut ke Moodle,
+diharapkan untuk memperhatikan kembali sebelum upload agar tidak terjadi kesalahan.
