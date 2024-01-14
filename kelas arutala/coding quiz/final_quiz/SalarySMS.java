@@ -3,7 +3,8 @@ import java.util.Scanner;
 
 /*
 *Created By: Rofiq Muhammad Syauqi
-*Created At: 13/01/2024 
+*Created At: 13/01/2024 15:49 PM
+*finished At: 15/01/2024 12:2 4AM
 */
 public class SalarySMS {
     public static void main(String[] args) {
@@ -76,11 +77,6 @@ public class SalarySMS {
                }         
         };
         
-        // debuggin function
-        // jabatanKaryawan = inputUser.nextLine();
-        // String is= isPosisiExist(jabatanKaryawan, arrJabatan);
-        // System.out.println(is);
-        // System.out.println(arrTingkatan[indexTingkatanKaryawan]);
         
         //inisialisasi 
         indexJabatanKaryawan = 0;
@@ -92,22 +88,22 @@ public class SalarySMS {
         statusKawin = false;
         jumlahAnakKaryawan = 0;
         gajiBruto = 0;
-        // input user
         boolean isInvalidInput = true;
+// input user
 
 // input nama
 
-        // do {
-        //     System.out.print("Masukkan Nama Karyawan: ");
-        //     namaKaryawan = inputUser.nextLine();
-        //     if(!isString(namaKaryawan)){
-        //         System.out.println("Input Harus Berupa Huruf!");
-        //     }else if(!isMinLengthString(namaKaryawan)){
-        //         System.out.println("Input Harus Lebih Dari 2!");
-        //     }else{
-        //         isInvalidInput = false;
-        //     }
-        // } while (isInvalidInput);
+        do {
+            System.out.print("Masukkan Nama Karyawan: ");
+            namaKaryawan = inputUser.nextLine();
+            if(!isString(namaKaryawan)){
+                System.out.println("Input Harus Berupa Huruf!");
+            }else if(!isMinLengthString(namaKaryawan)){
+                System.out.println("Input Harus Lebih Dari 2!");
+            }else{
+                isInvalidInput = false;
+            }
+        } while (isInvalidInput);
 
 // input jabatan
 
@@ -253,30 +249,31 @@ public class SalarySMS {
             rateGaji= getRatesGaji(indexJabatanKaryawan, masaKerjaKaryawan, indexTingkatanKaryawan, arrRatesGaji);
         }
 
-        System.out.println("---------{Receipt Gaji Karyawan}---------");
         gajiPokok = kalkulasiGajiPokok(rateGaji, arrUMK, indexPenempatanKaryawan);
-        System.out.println("Gaji Pokok: " + formatCurrency(gajiPokok));
         tunjanganJabatan= kalkulasiTunjJabatan(jabatanKaryawan, gajiPokok);
-        System.out.println("Tunjangan Jabatan: "+ formatCurrency(tunjanganJabatan));
         tunjanganKeluarga = kalkulasiTunjKeluarga(statusKawin, gajiPokok);
-        System.out.println("Tunjangan Keluarga: "+ formatCurrency(tunjanganKeluarga));
         tunjanganAnak = kalkulasiTunjAnak(jumlahAnakKaryawan, gajiPokok);
-        System.out.println("Tunjangan Anak: "+ formatCurrency(tunjanganAnak));
         tunjanganTingkatan= kalkulasiTunjTingkatan(arrTunjanganTingkatan, indexTingkatanKaryawan);
-        System.out.println("Tunjangan Tingkatan: "+ formatCurrency(tunjanganTingkatan));
         tunjanganTransportasi= kalkulasiTunjTransport(penempatanKaryawan);
-        System.out.println("Tunjangan Transportasi: "+ formatCurrency(tunjanganTingkatan));
         long[] arrTunjangan ={tunjanganJabatan, tunjanganKeluarga, tunjanganAnak, tunjanganTingkatan, tunjanganTransportasi};
         gajiBruto = kalkulasiGajiBruto(gajiPokok, arrTunjangan);
-        System.out.println("Gaji Bruto: "+ formatCurrency(gajiBruto));
         potonganPph = kalkulasiPph(gajiBruto, statusKawin, jumlahAnakKaryawan);
-        System.out.println("Potongan PPH: "+ formatCurrency(potonganPph));
         potonganBPJSTenagaKerja = kalkulasiPotonganBpjsTenagaKerja(gajiBruto);
-        System.out.println("Potongan BPJS Tenaga Kerja: "+ formatCurrency(potonganBPJSTenagaKerja));
         potonganBPJSKesehatan = kalkulasiPotonganBpjsKesehatan(gajiBruto);
-        System.out.println("Potongan BPJS Kesehatan: "+ formatCurrency(potonganBPJSKesehatan));
         long[] arrPotongan={potonganPph, potonganBPJSTenagaKerja, potonganBPJSKesehatan};
         totalTakeHomePay = kalkulasiTakeHomePay(gajiBruto, arrPotongan);
+        
+        System.out.println("---------{Receipt Gaji Karyawan}---------");
+        System.out.println("Gaji Pokok: " + formatCurrency(gajiPokok));
+        System.out.println("Tunjangan Jabatan: "+ formatCurrency(tunjanganJabatan));
+        System.out.println("Tunjangan Keluarga: "+ formatCurrency(tunjanganKeluarga));
+        System.out.println("Tunjangan Anak: "+ formatCurrency(tunjanganAnak));
+        System.out.println("Tunjangan Tingkatan: "+ formatCurrency(tunjanganTingkatan));
+        System.out.println("Tunjangan Transportasi: "+ formatCurrency(tunjanganTransportasi));
+        System.out.println("Gaji Bruto: "+ formatCurrency(gajiBruto));
+        System.out.println("Potongan PPH: "+ formatCurrency(potonganPph));
+        System.out.println("Potongan BPJS Tenaga Kerja: "+ formatCurrency(potonganBPJSTenagaKerja));
+        System.out.println("Potongan BPJS Kesehatan: "+ formatCurrency(potonganBPJSKesehatan));
         System.out.println("Take Home Pay/Gaji Bersih: "+ formatCurrency(totalTakeHomePay));
         
     }
@@ -441,15 +438,15 @@ public class SalarySMS {
             ptkp += Math.min(jumlahAnakKaryawan, maxAnak)*3000000;
         }
         long gajiBrutoPerTahun = gajiBruto*12;
-        if(gajiBrutoPerTahun >= persyaratanWajibPajak){
-            pkp = gajiBrutoPerTahun-ptkp;
-            pph = (long)(5.0/100 * pkp);
+        if(gajiBrutoPerTahun <= persyaratanWajibPajak){
+            pkp = Math.max(gajiBrutoPerTahun-ptkp, 0);
+            pph = (long)(5.0/100.0 * pkp);
             pphPerBulan = pph/12;
         }else{
             return 0;
         }
         
-       return pphPerBulan;
+       return pkp;
     }
 
     public static long kalkulasiPotonganBpjsTenagaKerja(long gajiBruto){
