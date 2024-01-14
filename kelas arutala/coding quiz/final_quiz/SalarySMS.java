@@ -438,7 +438,7 @@ public class SalarySMS {
             ptkp += Math.min(jumlahAnakKaryawan, maxAnak)*3000000;
         }
         long gajiBrutoPerTahun = gajiBruto*12;
-        if(gajiBrutoPerTahun <= persyaratanWajibPajak){
+        if(gajiBrutoPerTahun >= persyaratanWajibPajak){
             pkp = Math.max(gajiBrutoPerTahun-ptkp, 0);
             pph = (long)(5.0/100.0 * pkp);
             pphPerBulan = pph/12;
@@ -446,7 +446,7 @@ public class SalarySMS {
             return 0;
         }
         
-       return pkp;
+       return pphPerBulan;
     }
 
     public static long kalkulasiPotonganBpjsTenagaKerja(long gajiBruto){
