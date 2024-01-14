@@ -175,20 +175,22 @@ public class SalarySMSRofiqMS {
             System.out.print("Masukkan Masa Kerja Karyawan: ");
             try {
                 if (inputUser.hasNextInt()) {
-                    masaKerjaKaryawan = Integer.valueOf(inputUser.nextLine());
+                    masaKerjaKaryawan = inputUser.nextInt();
+                    inputUser.nextLine();  
                     if (!isNumber(masaKerjaKaryawan)) {
                         System.out.println("Input Harus Berupa angka");
                     } else if (!isMinLengthInteger(masaKerjaKaryawan)) {
                         System.out.println("Input tidak boleh lebih dari 30 dan kurang dari 0");
                     } else {
                         isInvalidInput = false;
-                        
                     }
                 } else {
                     System.out.println("Input Harus Angka");
+                    inputUser.nextLine();  
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Input Harus angka");
+                System.out.println("Input Harus angka1");
+                inputUser.nextLine(); 
             }
         } while (isInvalidInput);
         
