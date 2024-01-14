@@ -17,6 +17,66 @@ public class SalarySMS {
             long[] arrUMK=           {3800000, 2000000, 4500000, 4800000, 4300000, 5000000};
         String[] arrTingkatan= {"Intern","Junior", "Middle", "Senior"};
         String[] arrStatusKawin = {"Kawin", "Belum Kawin", "Cerai"};
+        int[][][] arrRatesGaji = {
+            {//programmer
+             {120,150,170},
+             {120,150,170},
+             {120,150,170},
+             {140,160,170},
+             {140,160,200},
+             {140,160,200},
+             {142,162,202},
+             {144,164,204},
+             {146,166,206},
+             {148,168,208},
+             {150,170,210}
+            }, 
+            {//tester
+                {100,130,150},
+                {100,130,150},
+                {100,130,150},
+                {120,140,150},
+                {120,140,160},
+                {120,140,160},
+                {122,142,162},
+                {124,144,164},
+                {126,146,166},
+                {128,148,168},
+                {130,150,170}
+            }, 
+            {//scrum master
+             {130,160,180},
+             {130,160,180},
+             {130,160,180},
+             {150,175,180},
+             {150,175,200},
+             {150,175,200},
+             {152,176,202},
+             {154,177,204},
+             {156,178,206},
+             {158,179,208},
+             {160,180,210}
+            }, 
+            {//hrd
+                {80,100,120,140},
+                {80,100,120,140},
+                {80,100,120,140},
+                {80,100,130,150},
+                {80,100,130,150},
+                {80,110,130,150},
+                {100,110,130,150},
+                {100,112,132,152},
+                {100,114,134,154},
+                {100,116,136,156},
+                {100,118,138,158}
+            },         
+        };
+        int jbtnPro = 0;
+        int masKerpro = 1;
+        int  
+
+        System.out.println(arrRatesGaji[0][1][0]);
+
 
         // debuggin function
         // jabatanKaryawan = inputUser.nextLine();
@@ -157,30 +217,30 @@ public class SalarySMS {
         //     }
         // }while(isInvalidInput);
 
-        isInvalidInput = true;
-        do{
-            System.out.println("Masukkan Jumlah Anak Karyawan: ");
-            try{
-                if(inputUser.hasNextInt()){
-                jumlahAnakKaryawan = inputUser.nextInt();
-                inputUser.nextLine();
-                if(!isNumber(jumlahAnakKaryawan)){
-                    System.out.println("Input Harus Berupa Angka");
-                }else if(!isMinLengthInteger(jumlahAnakKaryawan)){
-                    System.out.println("Input Tidak Boleh Lebih dari 30 dan Kurang dari 0");
-                }else{
-                    isInvalidInput = false;
-                }
-                }else{
-                    System.out.println("Input Harus Berupa Angka");
-                    inputUser.next();
-                }
-            }catch(InputMismatchException e){
-                System.out.println("Input Harus Berupa Angka");
-                inputUser.next();
-            }     
-        }while(isInvalidInput);
-        inputUser.close();
+        // isInvalidInput = true;
+        // do{
+        //     System.out.println("Masukkan Jumlah Anak Karyawan: ");
+        //     try{
+        //         if(inputUser.hasNextInt()){
+        //         jumlahAnakKaryawan = inputUser.nextInt();
+        //         inputUser.nextLine();
+        //         if(!isNumber(jumlahAnakKaryawan)){
+        //             System.out.println("Input Harus Berupa Angka");
+        //         }else if(!isMinLengthInteger(jumlahAnakKaryawan)){
+        //             System.out.println("Input Tidak Boleh Lebih dari 30 dan Kurang dari 0");
+        //         }else{
+        //             isInvalidInput = false;
+        //         }
+        //         }else{
+        //             System.out.println("Input Harus Berupa Angka");
+        //             inputUser.next();
+        //         }
+        //     }catch(InputMismatchException e){
+        //         System.out.println("Input Harus Berupa Angka");
+        //         inputUser.next();
+        //     }     
+        // }while(isInvalidInput);
+        // inputUser.close();
 
     }
 
