@@ -77,7 +77,7 @@ Gaji Bruto - SEMUA POTONGAN (pph + BPJS TENAGA KERJA + BPJS KESEHATAN)
 
 
 13. Function Utama Yang Harus ada:
-	-getRatesGaji,
+	-getRatesGaji(array/array multidimensi),
 		fungsi, mendapatkan 
 		besaran Rates Gaji
 		berdasarkan:
@@ -85,33 +85,55 @@ Gaji Bruto - SEMUA POTONGAN (pph + BPJS TENAGA KERJA + BPJS KESEHATAN)
 		Masa kerja,
 		tingkatan
 
-	-kalkulasiGajiPokok,
+	-kalkulasiGajiPokok(),
 		fungsi, menghitung
 		besaran gaji pokok Karyawan
+		-membutuhkan fungsi rates gaji
+		adalah besaran gaji yang didapat dari:
+		Rates Gaji * besaran UMK Penempatan Karyawan.
 
 	-kalkulasiTunjKeluarga,
 		fungsi, menghitung
 		besaran Tunjangan Keluarga
+		diberikan kepada karyawan yang status pernikahannya adalah Kawin (true), 
+		dapat dihitung dari 5% Gaji Pokok
 
 	-kalkulasiTunjAnak,
 		fungsi, menghitung
 		Besaran tunjangan anak
+		diberikan kepada karyawan yang sudah mempunyai anak (true), 
+		besaran per anak 2.5% * Gaji Pokok (Maks 4 anak)
 
 	-kalkulasiTunjJabatan,
 		fungsi, menghitung
 		besaran tunjangan jabatan
+		- Programmer: 10% 
+		- Tester: 15% 
+		- Scrum Master: 20% 
+		- HRD: 10% 
+		^ *  gaji pokok
 
 	-kalkulasiTunjTingkatan,
 		fungsi, menghitung
 		besaran tunjangan tingkatan
+		- Intern: 0
+		- Junior: Rp. 250000
+		- Middle: Rp. 500000
+		- Senior: Rp. 1000000
 
 	-kalkulasiTunjTransport,
 		fungsi, menghitung
 		besar tunjangan transport
+		diberikan kepada karyawan yang ditempatkan di 
+		Jakarta || Bandung. Besaran: Rp. 250.000.
 
 	-kalkulasiGajiBruto,
 		fungsi, menghitung
 		besaran gaji bruto karyawan
+		besarn didapat dari 
+		total Gaji Pokok + Tunjangan. Jabatan + Tunjangan Keluarga + Tunjangan Transport + Tunjangan Anak + Tunjangan Tingkatan
+
+		*Penghasilan bruto bisa berubah tergantung variable tunjangan.
 
 	-kalkulasiPph,
 		fungsi, menghitung
@@ -119,20 +141,39 @@ Gaji Bruto - SEMUA POTONGAN (pph + BPJS TENAGA KERJA + BPJS KESEHATAN)
 		oleh karyawan
 		per bulan
 
+		besaran pajak harus dibayar setiap bulan, sesuai dengan PTKP dan PKP
+		berdasarkan perhitungan berikut:
+			1. Wajib Pajak, 
+				Harus memiliki Penghasilan Bruto Lebih dari 
+				4000000 Rupiah.
+			2. Besarnya Penghasilan Tidak Kena Pajak (PTKP):
+				-Wajib pajak Diri Sendiri 
+					Rp. 36000000.
+				-Wajib Pajak Istri/Suami 
+					Rp. 3000000 (Max 3 Anak)/
+
+				contoh ada di SpreadSheet
+				*Pph21*
+
+
 	-kalkulasiPotonganBpjsTenagaKerja,
 		fungsi, menghitung
 		besaran BPJS Tenaga Kerja
 		per bulan
+		3.5% dari Gaji Bruto
 
 	-kalkulasiPotonganBpjsKesehatan,
 		fungsi, menghitung
 		besaran BPJS Kesehatan
+		1.5% dari Gaji Bruto
 
 	-kalkulasiTakeHomePay,
 		fungsi, menghitung
 		besaran take home pay
 		karyawan
 		per Bulan
+
+		Gaji Bruto - SEMUA POTONGAN (pph + BPJS TENAGA KERJA + BPJS KESEHATAN)
 
 *Note: Silahkan diperbolehkan untuk menambah function method lainnya yang dibutuhkan dengan ketentuan soal.
 
