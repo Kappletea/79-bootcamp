@@ -11,7 +11,7 @@ public class SalarySMS {
         Scanner inputUser = new Scanner(System.in);
         String namaKaryawan, jabatanKaryawan, penempatanKaryawan, tingkatanKaryawan, statusKawinKaryawan;
         int masaKerjaKaryawan, jumlahAnakKaryawan, indexPenempatanKaryawan, indexJabatanKaryawan, indexTingkatanKaryawan;
-
+        double rateGaji;
         // data
         String[] arrJabatan = { "Programmer", "Tester", "Scrum Master", "HRD" };
             String[] arrPenempatan = { "Bandung", "Garut", "Jakarta", "Bekasi", "Bogor", "Karawang" };
@@ -44,36 +44,35 @@ public class SalarySMS {
                 {126,146,166},
                 {128,148,168},
                 {130,150,170}
-            }, 
+            },
             {//scrum master
-             {130,160,180},
-             {130,160,180},
-             {130,160,180},
-             {150,175,180},
-             {150,175,200},
-             {150,175,200},
-             {152,176,202},
-             {154,177,204},
-             {156,178,206},
-             {158,179,208},
-             {160,180,210}
-            }, 
-            {//hrd
-                {80,100,120,140},
-                {80,100,120,140},
-                {80,100,120,140},
-                {80,100,130,150},
-                {80,100,130,150},
-                {80,110,130,150},
-                {100,110,130,150},
-                {100,112,132,152},
-                {100,114,134,154},
-                {100,116,136,156},
-                {100,118,138,158}
-            },         
+                {130,160,180},
+                {130,160,180},
+                {130,160,180},
+                {150,175,180},
+                {150,175,200},
+                {150,175,200},
+                {152,176,202},
+                {154,177,204},
+                {156,178,206},
+                {158,179,208},
+                {160,180,210}
+               }, 
+               {//hrd
+                   {80,100,120,140},
+                   {80,100,120,140},
+                   {80,100,120,140},
+                   {80,100,130,150},
+                   {80,100,130,150},
+                   {80,110,130,150},
+                   {100,110,130,150},
+                   {100,112,132,152},
+                   {100,114,134,154},
+                   {100,116,136,156},
+                   {100,118,138,158}
+               }         
         };
-
-
+        
         // debuggin function
         // jabatanKaryawan = inputUser.nextLine();
         // String is= isPosisiExist(jabatanKaryawan, arrJabatan);
@@ -85,6 +84,7 @@ public class SalarySMS {
         indexPenempatanKaryawan = 0;
         indexTingkatanKaryawan = 0;
         masaKerjaKaryawan =0;
+        rateGaji=0.0;
         // input user
         boolean isInvalidInput = true;
 
@@ -119,24 +119,24 @@ public class SalarySMS {
                 indexJabatanKaryawan = getArrayIndex(jabatanKaryawan, arrJabatan);
             }
         } while (isInvalidInput);
-
+        
 // input divisi
       
-        // do {
-        //     isInvalidInput = true;
-        //     System.out.print("Masukkan Penempatan Karyawan: ");
-        //     penempatanKaryawan = inputUser.nextLine();
-        //     if(!isString(penempatanKaryawan)){
-        //         System.out.println("Input Harus Berupa Huruf!");
-        //     }else if(isMinLengthString(penempatanKaryawan)){
-        //         System.out.println("Input Harus Lebih Dari 2!");
-        //     }else if(isDataExist(penempatanKaryawan, arrPenempatan)){
-        //         System.out.println("Divisi Tersebut Tidak Tercantum!");
-        //     }else{
-        //         isInvalidInput = false;
-        //         indexPenempatanKaryawan = getArrayIndex(penempatanKaryawan, arrPenempatan);
-        //     }
-        // } while (isInvalidInput);
+        do {
+            isInvalidInput = true;
+            System.out.print("Masukkan Penempatan Karyawan: ");
+            penempatanKaryawan = inputUser.nextLine();
+            if(!isString(penempatanKaryawan)){
+                System.out.println("Input Harus Berupa Huruf!");
+            }else if(!isMinLengthString(penempatanKaryawan)){
+                System.out.println("Input Harus Lebih Dari 2!");
+            }else if(!isDataExist(penempatanKaryawan, arrPenempatan)){
+                System.out.println("Divisi Tersebut Tidak Tercantum!");
+            }else{
+                isInvalidInput = false;
+                indexPenempatanKaryawan = getArrayIndex(penempatanKaryawan, arrPenempatan);
+            }
+        } while (isInvalidInput);
 
 //input tingkatan karyawan:
 
@@ -164,9 +164,9 @@ public class SalarySMS {
                 isInvalidInput= false;
             }
         } while (isInvalidInput);
+   
 
 //input masa kerja
-        System.out.println(arrTingkatan[indexTingkatanKaryawan]);
         isInvalidInput=true;
         do {
             System.out.println("Masukkan Masa Kerja Karyawan: ");
@@ -190,8 +190,8 @@ public class SalarySMS {
                 inputUser.next();
             }
         } while (isInvalidInput);
-        
-System.out.println(getRatesGaji(indexJabatanKaryawan, masaKerjaKaryawan, indexTingkatanKaryawan, arrRatesGaji));
+
+       
         
 //status kawin
         // isInvalidInput = true;
@@ -239,6 +239,14 @@ System.out.println(getRatesGaji(indexJabatanKaryawan, masaKerjaKaryawan, indexTi
         // }while(isInvalidInput);
         // inputUser.close();
 
+
+        if(jabatanKaryawan.equalsIgnoreCase("Programmer") || jabatanKaryawan.equalsIgnoreCase("Tester")|| jabatanKaryawan.equalsIgnoreCase("ScrumMaster")){
+            rateGaji= getRatesGaji(indexJabatanKaryawan, masaKerjaKaryawan, indexTingkatanKaryawan-1, arrRatesGaji);
+        }else{
+            rateGaji= getRatesGaji(indexJabatanKaryawan, masaKerjaKaryawan, indexTingkatanKaryawan, arrRatesGaji);
+        }
+        System.out.println(kalkulasiGajiPokok(rateGaji, arrUMK, indexPenempatanKaryawan));
+        
     }
 
     // validate function
@@ -269,7 +277,7 @@ System.out.println(getRatesGaji(indexJabatanKaryawan, masaKerjaKaryawan, indexTi
     }
 
     public static boolean isMinLengthInteger(int inputUser){
-        if(inputUser>0 && inputUser<=30){
+        if(inputUser>=0 && inputUser<=30){
             return true;
         }
         return false;
@@ -299,7 +307,14 @@ System.out.println(getRatesGaji(indexJabatanKaryawan, masaKerjaKaryawan, indexTi
 
     //get rates gaji
     public static double getRatesGaji(int indexJabatanKaryawan, int masaKerjaKaryawan, int indexTingkatanKaryawan, int[][][] arrRatesGaji){
-        double result = arrRatesGaji[indexJabatanKaryawan][masaKerjaKaryawan][indexJabatanKaryawan];
+        double result = arrRatesGaji[indexJabatanKaryawan][masaKerjaKaryawan][indexTingkatanKaryawan];
         return result;
+    }
+
+    //kalulasigajipokok
+    public static long kalkulasiGajiPokok(double rateGaji, long[] arrUMK, int indexPenempatanKaryawan){
+        double result = 0.0;
+        result = rateGaji/100.0 * arrUMK[indexPenempatanKaryawan];
+        return (long)result;
     }
 }
