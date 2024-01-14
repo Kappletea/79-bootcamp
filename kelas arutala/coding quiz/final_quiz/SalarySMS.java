@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /*
@@ -15,6 +16,7 @@ public class SalarySMS {
             String[] arrPenempatan = { "Bandung", "Garut", "Jakarta", "Bekasi", "Bogor", "Karawang" };
             long[] arrUMK=           {3800000, 2000000, 4500000, 4800000, 4300000, 5000000};
         String[] arrTingkatan= {"Intern","Junior", "Middle", "Senior"};
+        String[] arrStatusKawin = {"Kawin", "Belum Kawin", "Cerai"};
 
         // debuggin function
         // jabatanKaryawan = inputUser.nextLine();
@@ -37,7 +39,7 @@ public class SalarySMS {
         //     namaKaryawan = inputUser.nextLine();
         //     if(!isString(namaKaryawan)){
         //         System.out.println("Input Harus Berupa Huruf!");
-        //     }else if(!isMinLength(namaKaryawan)){
+        //     }else if(!isMinLengthString(namaKaryawan)){
         //         System.out.println("Input Harus Lebih Dari 2!");
         //     }else{
         //         isInvalidInput = false;
@@ -70,7 +72,7 @@ public class SalarySMS {
         //     penempatanKaryawan = inputUser.nextLine();
         //     if(!isString(penempatanKaryawan)){
         //         System.out.println("Input Harus Berupa Huruf!");
-        //     }else if(isMinLength(penempatanKaryawan)){
+        //     }else if(isMinLengthString(penempatanKaryawan)){
         //         System.out.println("Input Harus Lebih Dari 2!");
         //     }else if(isDataExist(penempatanKaryawan, arrPenempatan)){
         //         System.out.println("Divisi Tersebut Tidak Tercantum!");
@@ -90,7 +92,7 @@ public class SalarySMS {
         //     tingkatanKaryawan = inputUser.nextLine();
         //     if(!isString(tingkatanKaryawan)){
         //         System.out.println("Input Harus Berupa Huruf!");
-        //     }else if(!isMinLength(tingkatanKaryawan)){
+        //     }else if(!isMinLengthString(tingkatanKaryawan)){
         //         System.out.println("Input Harus Lebih Dari 2!");
         //     }else if(!isDataExist(tingkatanKaryawan, arrTingkatan)){
         //         System.out.println("Tingkatan Tersebut Tidak Tercantum di Posisi " + jabatanKaryawan);
@@ -108,18 +110,77 @@ public class SalarySMS {
         // } while (isInvalidInput);
 
         // System.out.println(arrTingkatan[indexTingkatanKaryawan]);
+        // isInvalidInput=true;
+        // do {
+        //     System.out.println("Masukkan Masa Kerja Karyawan: ");
+        //     try {
+        //         if (inputUser.hasNextInt()) {
+        //             masaKerjaKaryawan = inputUser.nextInt();
+
+        //             if (!isNumber(masaKerjaKaryawan)) {
+        //                 System.out.println("Input Harus Berupa angka");
+        //             } else if (!isMinLengthInteger(masaKerjaKaryawan)) {
+        //                 System.out.println("Input tidak boleh lebih dari 30 dan kurang dari 0");
+        //             } else {
+        //                 isInvalidInput = false;
+        //             }
+        //         } else {
+        //             System.out.println("Input Harus Angka");
+        //             inputUser.next();
+        //         }
+
+        //     } catch (InputMismatchException e) {
+        //         System.out.println("Input Harus angka");
+        //         inputUser.next();
+        //     }
+        // } while (isInvalidInput);
         
-        System.out.println("Masukkan Masa Kerja Karyawan: ");
-        masaKerjaKaryawan = inputUser.nextInt();
-        System.out.println(isNumber(masaKerjaKaryawan));
         
         
-        // inputUser.nextLine();
-        // System.out.println("Masukkan Status Kawin Karyawan: ");
-        // statusKawinKaryawan = inputUser.nextLine();
-        // System.out.println("Masukkan Jumlah Anak Karyawan: ");
-        // jumlahAnakKaryawan = inputUser.nextInt();
-        // inputUser.close();
+        
+        // isInvalidInput = true;
+        // do{
+        //     System.out.println("Masukkan Status Kawin Karyawan: ");
+        //     statusKawinKaryawan = inputUser.nextLine();
+        //     if(!isString(statusKawinKaryawan)){
+        //         System.out.println("Input Harus Huruf");
+        //     }else if(!isMinLengthString(statusKawinKaryawan)){
+        //         System.out.println("Input Harus Lebih Dari 2 Huruf");
+        //     }else if(!isDataExist(statusKawinKaryawan, arrStatusKawin)){
+        //         System.out.println("Status Yang Anda Sebutkan Tidak Tercantum");
+        //         System.out.println("Status Yang Harus Di isi adalah:");
+        //         for(int i=0; i<arrStatusKawin.length; i++){
+        //             System.out.println(arrStatusKawin[i]);
+        //         }
+        //     }else {
+        //         isInvalidInput = false;
+        //     }
+        // }while(isInvalidInput);
+
+        isInvalidInput = true;
+        do{
+            System.out.println("Masukkan Jumlah Anak Karyawan: ");
+            try{
+                if(inputUser.hasNextInt()){
+                jumlahAnakKaryawan = inputUser.nextInt();
+                inputUser.nextLine();
+                if(!isNumber(jumlahAnakKaryawan)){
+                    System.out.println("Input Harus Berupa Angka");
+                }else if(!isMinLengthInteger(jumlahAnakKaryawan)){
+                    System.out.println("Input Tidak Boleh Lebih dari 30 dan Kurang dari 0");
+                }else{
+                    isInvalidInput = false;
+                }
+                }else{
+                    System.out.println("Input Harus Berupa Angka");
+                    inputUser.next();
+                }
+            }catch(InputMismatchException e){
+                System.out.println("Input Harus Berupa Angka");
+                inputUser.next();
+            }     
+        }while(isInvalidInput);
+        inputUser.close();
 
     }
 
@@ -141,13 +202,20 @@ public class SalarySMS {
         return inputString.matches("[0-9]+");
     }
 
-    public static boolean isMinLength(String inputUser) {
+    public static boolean isMinLengthString(String inputUser) {
         char[] input = inputUser.toCharArray();
         if (input.length > 2) {
             return true;
         } else {
             return false;
         }
+    }
+
+    public static boolean isMinLengthInteger(int inputUser){
+        if(inputUser>0 && inputUser<=30){
+            return true;
+        }
+        return false;
     }
 
     public static Boolean isDataExist(String inputUser, String[] arrData) {
