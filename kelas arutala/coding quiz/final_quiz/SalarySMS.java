@@ -26,6 +26,7 @@ public class SalarySMS {
         indexJabatanKaryawan = 0;
         indexPenempatanKaryawan = 0;
         indexTingkatanKaryawan = 0;
+        
         // input user
         boolean isInvalidInput = true;
 
@@ -45,21 +46,21 @@ public class SalarySMS {
 
 // input jabatan
 
-        do {
-            isInvalidInput = true;
-            System.out.print("Masukkan Jabatan Karyawan: ");
-            jabatanKaryawan = inputUser.nextLine();
-            if(!isString(jabatanKaryawan)){
-                System.out.println("Input Harus Berupa Huruf!");
-            }else if(!isMinLength(jabatanKaryawan)){
-                System.out.println("Input Harus Lebih Dari 2!");
-            }else if(!isDataExist(jabatanKaryawan, arrJabatan)){
-                System.out.println("Jabatan Tersebut Tidak Tercantum!");
-            }else{
-                isInvalidInput = false;
-                indexJabatanKaryawan = getArrayIndex(jabatanKaryawan, arrJabatan);
-            }
-        } while (isInvalidInput);
+        // do {
+        //     isInvalidInput = true;
+        //     System.out.print("Masukkan Jabatan Karyawan: ");
+        //     jabatanKaryawan = inputUser.nextLine();
+        //     if(!isString(jabatanKaryawan)){
+        //         System.out.println("Input Harus Berupa Huruf!");
+        //     }else if(!isMinLength(jabatanKaryawan)){
+        //         System.out.println("Input Harus Lebih Dari 2!");
+        //     }else if(!isDataExist(jabatanKaryawan, arrJabatan)){
+        //         System.out.println("Jabatan Tersebut Tidak Tercantum!");
+        //     }else{
+        //         isInvalidInput = false;
+        //         indexJabatanKaryawan = getArrayIndex(jabatanKaryawan, arrJabatan);
+        //     }
+        // } while (isInvalidInput);
 
 // input divisi
       
@@ -83,33 +84,36 @@ public class SalarySMS {
 
        
 
-         do {
-            isInvalidInput = true;
-            System.out.print("Masukkan Tingkatan Karyawan: ");
-            tingkatanKaryawan = inputUser.nextLine();
-            if(!isString(tingkatanKaryawan)){
-                System.out.println("Input Harus Berupa Huruf!");
-            }else if(!isMinLength(tingkatanKaryawan)){
-                System.out.println("Input Harus Lebih Dari 2!");
-            }else if(!isDataExist(tingkatanKaryawan, arrTingkatan)){
-                System.out.println("Tingkatan Tersebut Tidak Tercantum di Posisi " + jabatanKaryawan);
-            }else if(jabatanKaryawan.equalsIgnoreCase("Programmer") || jabatanKaryawan.equalsIgnoreCase("Tester") || jabatanKaryawan.equalsIgnoreCase("Scrum Master")){
-                if(tingkatanKaryawan.equals("Intern")){
-                    System.out.println("Tingkatan Intern Tidak Termasuk Di Jabatan "+ jabatanKaryawan);
-                }else{
-                    indexTingkatanKaryawan = getArrayIndex(tingkatanKaryawan, arrTingkatan);
-                    isInvalidInput= false;
-                }
-            }else{
-                indexTingkatanKaryawan = getArrayIndex(tingkatanKaryawan, arrTingkatan);
-                isInvalidInput= false;
-            }
-        } while (isInvalidInput);
+        // do {
+        //     isInvalidInput = true;
+        //     System.out.print("Masukkan Tingkatan Karyawan: ");
+        //     tingkatanKaryawan = inputUser.nextLine();
+        //     if(!isString(tingkatanKaryawan)){
+        //         System.out.println("Input Harus Berupa Huruf!");
+        //     }else if(!isMinLength(tingkatanKaryawan)){
+        //         System.out.println("Input Harus Lebih Dari 2!");
+        //     }else if(!isDataExist(tingkatanKaryawan, arrTingkatan)){
+        //         System.out.println("Tingkatan Tersebut Tidak Tercantum di Posisi " + jabatanKaryawan);
+        //     }else if(jabatanKaryawan.equalsIgnoreCase("Programmer") || jabatanKaryawan.equalsIgnoreCase("Tester") || jabatanKaryawan.equalsIgnoreCase("Scrum Master")){
+        //         if(tingkatanKaryawan.equals("Intern")){
+        //             System.out.println("Tingkatan Intern Tidak Termasuk Di Jabatan "+ jabatanKaryawan);
+        //         }else{
+        //             indexTingkatanKaryawan = getArrayIndex(tingkatanKaryawan, arrTingkatan);
+        //             isInvalidInput= false;
+        //         }
+        //     }else{
+        //         indexTingkatanKaryawan = getArrayIndex(tingkatanKaryawan, arrTingkatan);
+        //         isInvalidInput= false;
+        //     }
+        // } while (isInvalidInput);
 
-        System.out.println(arrTingkatan[indexTingkatanKaryawan]);
+        // System.out.println(arrTingkatan[indexTingkatanKaryawan]);
         
-        // System.out.println("Masukkan Masa Kerja Karyawan: ");
-        // masaKerjaKaryawan = inputUser.nextInt();
+        System.out.println("Masukkan Masa Kerja Karyawan: ");
+        masaKerjaKaryawan = inputUser.nextInt();
+        System.out.println(isNumber(masaKerjaKaryawan));
+        
+        
         // inputUser.nextLine();
         // System.out.println("Masukkan Status Kawin Karyawan: ");
         // statusKawinKaryawan = inputUser.nextLine();
@@ -130,6 +134,11 @@ public class SalarySMS {
 
     public static boolean isAlpabet(String inputUser) {
         return inputUser.matches("[a-zA-Z]+");
+    }
+
+    public static boolean isNumber(int inputUser) {
+        String inputString = Integer.toString(inputUser);
+        return inputString.matches("[0-9]+");
     }
 
     public static boolean isMinLength(String inputUser) {
