@@ -4,9 +4,9 @@ import java.util.Scanner;
 /*
 *Created By: Rofiq Muhammad Syauqi
 *Created At: 13/01/2024 15:49 PM
-*finished At: 15/01/2024 12:2 4AM
+*finished At: 15/01/2024 12:53 AM
 */
-public class SalarySMS {
+public class SalarySMSRofiqMS {
     public static void main(String[] args) {
         // deklarasi
         Scanner inputUser = new Scanner(System.in);
