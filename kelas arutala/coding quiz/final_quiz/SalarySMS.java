@@ -12,12 +12,15 @@ public class SalarySMS {
         String namaKaryawan, jabatanKaryawan, penempatanKaryawan, tingkatanKaryawan, statusKawinKaryawan;
         int masaKerjaKaryawan, jumlahAnakKaryawan, indexPenempatanKaryawan, indexJabatanKaryawan, indexTingkatanKaryawan;
         double rateGaji;
+        long gajiPokok, tunjanganKeluarga, tunjanganAnak, tunjanganJabatan, tunjanganTingkatan, tunjanganTransportasi, gajiBruto, potonganPph, potonganBPJSTenagaKerja, potonganBPJSKesehatan, totalTakeHomePay;
+        boolean statusKawin;
         // data
         String[] arrJabatan = { "Programmer", "Tester", "Scrum Master", "HRD" };
             String[] arrPenempatan = { "Bandung", "Garut", "Jakarta", "Bekasi", "Bogor", "Karawang" };
             long[] arrUMK=           {3800000, 2000000, 4500000, 4800000, 4300000, 5000000};
         String[] arrTingkatan= {"Intern","Junior", "Middle", "Senior"};
         String[] arrStatusKawin = {"Kawin", "Belum Kawin", "Cerai"};
+        long[] arrTunjanganTingkatan = {0, 250000, 500000, 1000000};
         int[][][] arrRatesGaji = {
             {//programmer
              {120,150,170},
@@ -85,6 +88,10 @@ public class SalarySMS {
         indexTingkatanKaryawan = 0;
         masaKerjaKaryawan =0;
         rateGaji=0.0;
+        gajiPokok = 0;
+        statusKawin = false;
+        jumlahAnakKaryawan = 0;
+        gajiBruto = 0;
         // input user
         boolean isInvalidInput = true;
 
@@ -153,7 +160,7 @@ public class SalarySMS {
             }else if(!isDataExist(tingkatanKaryawan, arrTingkatan)){
                 System.out.println("Tingkatan Tersebut Tidak Tercantum di Posisi " + jabatanKaryawan);
             }else if(jabatanKaryawan.equalsIgnoreCase("Programmer") || jabatanKaryawan.equalsIgnoreCase("Tester") || jabatanKaryawan.equalsIgnoreCase("Scrum Master")){
-                if(tingkatanKaryawan.equals("Intern")){
+                if(tingkatanKaryawan.equalsIgnoreCase("Intern")){
                     System.out.println("Tingkatan Intern Tidak Termasuk Di Jabatan "+ jabatanKaryawan);
                 }else{
                     indexTingkatanKaryawan = getArrayIndex(tingkatanKaryawan, arrTingkatan);
@@ -169,83 +176,108 @@ public class SalarySMS {
 //input masa kerja
         isInvalidInput=true;
         do {
-            System.out.println("Masukkan Masa Kerja Karyawan: ");
+            System.out.print("Masukkan Masa Kerja Karyawan: ");
             try {
                 if (inputUser.hasNextInt()) {
-                    masaKerjaKaryawan = inputUser.nextInt();
-
+                    masaKerjaKaryawan = Integer.valueOf(inputUser.nextLine());
                     if (!isNumber(masaKerjaKaryawan)) {
                         System.out.println("Input Harus Berupa angka");
                     } else if (!isMinLengthInteger(masaKerjaKaryawan)) {
                         System.out.println("Input tidak boleh lebih dari 30 dan kurang dari 0");
                     } else {
                         isInvalidInput = false;
+                        
                     }
                 } else {
                     System.out.println("Input Harus Angka");
-                    inputUser.next();
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Input Harus angka");
-                inputUser.next();
             }
         } while (isInvalidInput);
-
-       
         
-//status kawin
-        // isInvalidInput = true;
-        // do{
-        //     System.out.println("Masukkan Status Kawin Karyawan: ");
-        //     statusKawinKaryawan = inputUser.nextLine();
-        //     if(!isString(statusKawinKaryawan)){
-        //         System.out.println("Input Harus Huruf");
-        //     }else if(!isMinLengthString(statusKawinKaryawan)){
-        //         System.out.println("Input Harus Lebih Dari 2 Huruf");
-        //     }else if(!isDataExist(statusKawinKaryawan, arrStatusKawin)){
-        //         System.out.println("Status Yang Anda Sebutkan Tidak Tercantum");
-        //         System.out.println("Status Yang Harus Di isi adalah:");
-        //         for(int i=0; i<arrStatusKawin.length; i++){
-        //             System.out.println(arrStatusKawin[i]);
-        //         }
-        //     }else {
-        //         isInvalidInput = false;
-        //     }
-        // }while(isInvalidInput);
+
+        
+// status kawin
+        isInvalidInput = true;
+        do{
+            System.out.print("Masukkan Status Kawin Karyawan: ");
+            statusKawinKaryawan = inputUser.nextLine();
+            if(!isString(statusKawinKaryawan)){
+                System.out.println("Input Harus Huruf");
+            }else if(!isMinLengthString(statusKawinKaryawan)){
+                System.out.println("Input Harus Lebih Dari 2 Huruf");
+            }else if(!isDataExist(statusKawinKaryawan, arrStatusKawin)){
+                System.out.print("\n");
+                System.out.println("Status Yang Anda Sebutkan Tidak Tercantum");
+                System.out.println("Status Yang Harus Di isi adalah:");
+                for(int i=0; i<arrStatusKawin.length; i++){
+                    System.out.println(arrStatusKawin[i]);
+                }
+            }else {
+                statusKawin = isEmployeeMaried(statusKawinKaryawan);
+                isInvalidInput = false;
+            }
+        }while(isInvalidInput);
 
 //jumlah anak
-        // isInvalidInput = true;
-        // do{
-        //     System.out.println("Masukkan Jumlah Anak Karyawan: ");
-        //     try{
-        //         if(inputUser.hasNextInt()){
-        //         jumlahAnakKaryawan = inputUser.nextInt();
-        //         inputUser.nextLine();
-        //         if(!isNumber(jumlahAnakKaryawan)){
-        //             System.out.println("Input Harus Berupa Angka");
-        //         }else if(!isMinLengthInteger(jumlahAnakKaryawan)){
-        //             System.out.println("Input Tidak Boleh Lebih dari 30 dan Kurang dari 0");
-        //         }else{
-        //             isInvalidInput = false;
-        //         }
-        //         }else{
-        //             System.out.println("Input Harus Berupa Angka");
-        //             inputUser.next();
-        //         }
-        //     }catch(InputMismatchException e){
-        //         System.out.println("Input Harus Berupa Angka");
-        //         inputUser.next();
-        //     }     
-        // }while(isInvalidInput);
-        // inputUser.close();
+        isInvalidInput = true;
+        do{
+            System.out.print("Masukkan Jumlah Anak Karyawan: ");
+            try{
+                if(inputUser.hasNextInt()){
+                jumlahAnakKaryawan = inputUser.nextInt();
+                inputUser.nextLine();
+                if(!isNumber(jumlahAnakKaryawan)){
+                    System.out.println("Input Harus Berupa Angka");
+                }else if(!isMinLengthInteger(jumlahAnakKaryawan)){
+                    System.out.println("Input Tidak Boleh Lebih dari 30 dan Kurang dari 0");
+                }else{
+                    isInvalidInput = false;
+                }
+                }else{
+                    System.out.println("Input Harus Berupa Angka");
+                    inputUser.next();
+                }
+            }catch(InputMismatchException e){
+                System.out.println("Input Harus Berupa Angka");
+                inputUser.next();
+            }     
+        }while(isInvalidInput);
+        inputUser.close();
 
 
-        if(jabatanKaryawan.equalsIgnoreCase("Programmer") || jabatanKaryawan.equalsIgnoreCase("Tester")|| jabatanKaryawan.equalsIgnoreCase("ScrumMaster")){
+        if(jabatanKaryawan.equalsIgnoreCase("Programmer") || jabatanKaryawan.equalsIgnoreCase("Tester")|| jabatanKaryawan.equalsIgnoreCase("Scrum Master")){
             rateGaji= getRatesGaji(indexJabatanKaryawan, masaKerjaKaryawan, indexTingkatanKaryawan-1, arrRatesGaji);
         }else{
             rateGaji= getRatesGaji(indexJabatanKaryawan, masaKerjaKaryawan, indexTingkatanKaryawan, arrRatesGaji);
         }
-        System.out.println(kalkulasiGajiPokok(rateGaji, arrUMK, indexPenempatanKaryawan));
+
+        System.out.println("---------{Receipt Gaji Karyawan}---------");
+        gajiPokok = kalkulasiGajiPokok(rateGaji, arrUMK, indexPenempatanKaryawan);
+        System.out.println("Gaji Pokok: " + formatCurrency(gajiPokok));
+        tunjanganJabatan= kalkulasiTunjJabatan(jabatanKaryawan, gajiPokok);
+        System.out.println("Tunjangan Jabatan: "+ formatCurrency(tunjanganJabatan));
+        tunjanganKeluarga = kalkulasiTunjKeluarga(statusKawin, gajiPokok);
+        System.out.println("Tunjangan Keluarga: "+ formatCurrency(tunjanganKeluarga));
+        tunjanganAnak = kalkulasiTunjAnak(jumlahAnakKaryawan, gajiPokok);
+        System.out.println("Tunjangan Anak: "+ formatCurrency(tunjanganAnak));
+        tunjanganTingkatan= kalkulasiTunjTingkatan(arrTunjanganTingkatan, indexTingkatanKaryawan);
+        System.out.println("Tunjangan Tingkatan: "+ formatCurrency(tunjanganTingkatan));
+        tunjanganTransportasi= kalkulasiTunjTransport(penempatanKaryawan);
+        System.out.println("Tunjangan Transportasi: "+ formatCurrency(tunjanganTingkatan));
+        long[] arrTunjangan ={tunjanganJabatan, tunjanganKeluarga, tunjanganAnak, tunjanganTingkatan, tunjanganTransportasi};
+        gajiBruto = kalkulasiGajiBruto(gajiPokok, arrTunjangan);
+        System.out.println("Gaji Bruto: "+ formatCurrency(gajiBruto));
+        potonganPph = kalkulasiPph(gajiBruto, statusKawin, jumlahAnakKaryawan);
+        System.out.println("Potongan PPH: "+ formatCurrency(potonganPph));
+        potonganBPJSTenagaKerja = kalkulasiPotonganBpjsTenagaKerja(gajiBruto);
+        System.out.println("Potongan BPJS Tenaga Kerja: "+ formatCurrency(potonganBPJSTenagaKerja));
+        potonganBPJSKesehatan = kalkulasiPotonganBpjsKesehatan(gajiBruto);
+        System.out.println("Potongan BPJS Kesehatan: "+ formatCurrency(potonganBPJSKesehatan));
+        long[] arrPotongan={potonganPph, potonganBPJSTenagaKerja, potonganBPJSKesehatan};
+        totalTakeHomePay = kalkulasiTakeHomePay(gajiBruto, arrPotongan);
+        System.out.println("Take Home Pay/Gaji Bersih: "+ formatCurrency(totalTakeHomePay));
         
     }
 
@@ -292,8 +324,16 @@ public class SalarySMS {
         return false;
     }
 
+    public static Boolean isEmployeeMaried(String inputUser){
+            if(inputUser.equalsIgnoreCase("Kawin")){
+                return true;
+            }else{
+                return false;
+            }
+    }
+    //end validate function
     
-
+//get funciton
     //get index array
     public static int getArrayIndex(String inputUser, String[] arrData){
         int result = 0;
@@ -311,10 +351,130 @@ public class SalarySMS {
         return result;
     }
 
+
+//function kalkulasi
     //kalulasigajipokok
     public static long kalkulasiGajiPokok(double rateGaji, long[] arrUMK, int indexPenempatanKaryawan){
         double result = 0.0;
         result = rateGaji/100.0 * arrUMK[indexPenempatanKaryawan];
         return (long)result;
+    }
+
+    //cek status kawin
+
+    //kalkulasi tunjangan keluarga
+    public static long kalkulasiTunjKeluarga(boolean isEmployeeMaried, long gajiPokok){
+        double result = 0;
+        double presentaseTunjangan = 5.0/100.0;
+        if(isEmployeeMaried == true){
+            result = presentaseTunjangan * gajiPokok;
+            return (long)result;
+        }else{
+            return 0;
+        }
+    }
+
+    public static long kalkulasiTunjAnak(int jumlahAnakKaryawan, long gajiPokok){
+        int maxAnak = 4;
+        double presentaseTunjangan = 2.5/100.0;
+        double result;
+        result = presentaseTunjangan *gajiPokok * Math.min(jumlahAnakKaryawan,maxAnak);
+        return (long)result;
+    }
+
+    public static long kalkulasiTunjJabatan(String jabatanKaryawan, long gajiPokok){
+        double presentaseTunjangan;
+        switch(jabatanKaryawan.toLowerCase()){
+            case "programmer":
+                presentaseTunjangan = 10.0;
+                break;
+            case "tester":
+                presentaseTunjangan = 15.0;
+                break;
+            case "scrum master":
+                presentaseTunjangan = 20.0;
+                break;
+            case "hrd":
+                presentaseTunjangan = 10.0;
+                break;
+            default:
+                presentaseTunjangan = 0.0;
+            break;
+        }
+
+        return (long)(presentaseTunjangan/100.0*gajiPokok);
+    }
+
+    public static long kalkulasiTunjTingkatan(long[] arrTunjanganTingkatan,int indexTingkatanKaryawan){
+        long result = arrTunjanganTingkatan[indexTingkatanKaryawan];
+        return result;
+    }
+
+    public static long kalkulasiTunjTransport(String penempatanKaryawan){
+        long result = 0;
+        if(penempatanKaryawan.equalsIgnoreCase("Jakarta") || penempatanKaryawan.equalsIgnoreCase("Bandung")){
+            result = 250000;
+        }else{
+            result = 0;
+        }
+        return result;
+    }
+
+    public static long kalkulasiGajiBruto(long gajiPokok,long[] arrTunjangan){
+        long result=0;
+        long totalTunjangan =0;
+        for(int i =0; i<arrTunjangan.length; i++){
+            totalTunjangan += arrTunjangan[i];
+        }
+        return result = gajiPokok +totalTunjangan;
+    }
+
+    public static long kalkulasiPph(long gajiBruto, boolean statusKawin,int jumlahAnakKaryawan){
+        long pkp, pph, pphPerBulan;
+        long persyaratanWajibPajak = 4000000;
+        long ptkp = 36000000;
+        int maxAnak = 3;
+        if(statusKawin==true){
+            ptkp += 3000000;
+        }
+        if(jumlahAnakKaryawan>0){
+            ptkp += Math.min(jumlahAnakKaryawan, maxAnak)*3000000;
+        }
+        long gajiBrutoPerTahun = gajiBruto*12;
+        if(gajiBrutoPerTahun >= persyaratanWajibPajak){
+            pkp = gajiBrutoPerTahun-ptkp;
+            pph = (long)(5.0/100 * pkp);
+            pphPerBulan = pph/12;
+        }else{
+            return 0;
+        }
+        
+       return pphPerBulan;
+    }
+
+    public static long kalkulasiPotonganBpjsTenagaKerja(long gajiBruto){
+        long result =0;
+        double potongan = 3.5/100.0;
+        result = (long)(potongan*gajiBruto);
+        return result;
+    }
+    public static long kalkulasiPotonganBpjsKesehatan(long gajiBruto){
+        long result =0;
+        double potongan = 1.5/100.0;
+        result = (long)(potongan*gajiBruto);
+        return result;
+    }
+    public static long kalkulasiTakeHomePay(long gajiBruto, long[] arrPotongan){
+        long result=gajiBruto;
+        for(int i=0; i <arrPotongan.length;i++){
+            result = (long)(result-arrPotongan[i]);
+        }
+        return result;
+    }
+
+//format currency
+    public static String formatCurrency(long nominal){
+        String formattedValue = String.format("Rp.%,.0f", (double)nominal);
+        return formattedValue;
     }
 }
