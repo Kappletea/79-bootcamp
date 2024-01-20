@@ -1,0 +1,4 @@
+list pertanyaan seputar OOP
+1. kang tolong jelaskan seputar interface dan abstrak. kapan digunakannya, dan tolong berikan contoh real seperti apa interface dan abstrak. saya kesulitan membayangkan pada kasus seperti apa interface dan abstrak digunakan.
+
+2.  untuk polymorphism, kapan digunakannya overloading method dan override method.
